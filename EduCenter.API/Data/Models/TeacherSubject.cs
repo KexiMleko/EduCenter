@@ -1,4 +1,6 @@
-namespace EduCenter.Domain.Models;
+using EduCenter.API.Base;
+
+namespace EduCenter.API.Data.Models;
 public class TeacherSubject : BaseEntity
 {
     public int TeacherId { get; set; }

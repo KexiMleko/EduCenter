@@ -1,4 +1,4 @@
-namespace EduCenter.Domain.Enums;
+namespace EduCenter.API.Data.Enums;
 
 public enum SessionStatus
 {

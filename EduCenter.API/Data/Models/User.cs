@@ -1,4 +1,6 @@
-namespace EduCenter.Domain.Models;
+using EduCenter.API.Base;
+
+namespace EduCenter.API.Data.Models;
 public class User : BaseEntity
 {
     public string Username { get; set; } = "";

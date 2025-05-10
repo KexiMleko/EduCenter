@@ -1,6 +1,7 @@
-using EduCenter.Domain.Enums;
+using EduCenter.API.Base;
+using EduCenter.API.Data.Enums;
 
-namespace EduCenter.Domain.Models;
+namespace EduCenter.API.Data.Models;
 public class GroupSession : BaseEntity
 {
     public string Title { get; set; } = "";

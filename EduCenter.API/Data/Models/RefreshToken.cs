@@ -1,4 +1,6 @@
-namespace EduCenter.Domain.Models;
+using EduCenter.API.Base;
+
+namespace EduCenter.API.Data.Models;
 public class RefreshToken : BaseEntity
 {
     public int UserId { get; set; }

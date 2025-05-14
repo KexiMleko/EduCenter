@@ -1,4 +1,6 @@
 using EduCenter.API.Data;
+using EduCenter.API.Shared.Services.Hashing;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,8 @@ builder.Services.AddSwaggerGen();  // Add Swagger generation
 builder.Services.AddDbContext<DatabaseContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DevConnection")));
 
+builder.Services.Configure<Argon2Options>(options => { });
+builder.Services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

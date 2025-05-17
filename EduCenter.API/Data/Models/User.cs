@@ -20,5 +20,5 @@ public class User : BaseEntity
     public string Address { get; set; } = "";
     [MaxLength(500)]
     public string? Note { get; set; }
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 }

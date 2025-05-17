@@ -4,7 +4,7 @@ using Isopoh.Cryptography.Argon2;
 using Isopoh.Cryptography.SecureArray;
 using Microsoft.Extensions.Options;
 namespace EduCenter.API.Shared.Services.Hashing;
-public class Argon2PasswordHasher : IPasswordHasher
+public class Argon2PasswordHasher : IPasswordHashService
 {
     private readonly Argon2Options _options;
     public Argon2PasswordHasher(IOptions<Argon2Options> options)

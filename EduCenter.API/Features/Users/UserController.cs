@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using EduCenter.API.Features.Users.DTOs;
 using System;
+using EduCenter.API.Features.Users.GetUserById;
+
 namespace EduCenter.API.Features.Users;
 public class UserController : BaseApiController
 {
@@ -13,16 +15,19 @@ public class UserController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("add")]
-    //[ProducesResponseType(typeof(UserViewModel), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Create(RegisterUserCommand cmd, CancellationToken ct)
+    [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status201Created)]
+    public async Task<IActionResult> Create([FromBody] RegisterUserCommand cmd, CancellationToken ct)
     {
-        var userView = await _mediator.Send(cmd, ct);
-        Console.WriteLine($"USER VIEW id: {userView.Username}");
-        return Ok(userView);
+        var user = await _mediator.Send(cmd, ct);
+        return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
     }
-    [HttpGet("get-by-id")]
-    public async Task<IActionResult> GetById()
+    [HttpGet("get-by-id/{id}")]
+    [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetById(int id, CancellationToken ct)
     {
-        return Ok();
+        var query = new GetUserByIdQuery(id);
+        UserViewModel user = await _mediator.Send(query, ct);
+        return user == null ? NotFound() : Ok(user);
     }
 }

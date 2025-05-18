@@ -39,9 +39,19 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserView
             CreatedAt = DateTime.UtcNow,
             IsActive = true
         };
-        var userView = await _uow.users.AddUser(user, ct);
+        user = await _uow.users.AddUser(user, ct);
         await _uow.SaveChangesAsync(ct);
-        return userView;
+        return new UserViewModel
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            PhoneNumber = user.PhoneNumber,
+            Address = user.Address,
+            Note = user.Note
+        };
     }
 }
 

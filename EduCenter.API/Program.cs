@@ -1,4 +1,5 @@
 using System.Text;
+using EFCore.NamingConventions;
 using EduCenter.API.Base.Repositories;
 using EduCenter.API.Data;
 using EduCenter.API.Features.Users;
@@ -49,7 +50,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("DevConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DevConnection"))
+           .UseSnakeCaseNamingConvention());
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.Configure<Argon2Options>(options => { });
 builder.Services.AddSingleton<IPasswordHashService, Argon2PasswordHasher>();

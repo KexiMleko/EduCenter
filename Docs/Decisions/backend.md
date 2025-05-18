@@ -1,5 +1,22 @@
 # Backend
 
+<!--toc:start-->
+- [Backend](#backend)
+  - [1. Introduction](#1-introduction)
+  - [2. Architectural Approach](#2-architectural-approach)
+    - [Style Chosen: Vertical Slice Architecture (CQRS-based)](#style-chosen-vertical-slice-architecture-cqrs-based)
+  - [3. API Design](#3-api-design)
+    - [Style Chosen: Controller-based API (not Minimal APIs)](#style-chosen-controller-based-api-not-minimal-apis)
+  - [4. Read/Write Separation](#4-readwrite-separation)
+    - [Chosen Pattern: CQRS](#chosen-pattern-cqrs)
+  - [5. Domain + Controller Style](#5-domain-controller-style)
+    - [Chosen: Anemic Models and Controllers](#chosen-anemic-models-and-controllers)
+  - [6. Database Choice](#6-database-choice)
+    - [Chosen: PostgreSQL](#chosen-postgresql)
+  - [7. Database Schema](#7-database-schema)
+  - [8. Final Thoughts](#8-final-thoughts)
+<!--toc:end-->
+
 ## 1. Introduction
 
 Brief summary of what powers the backend, the key priorities (performance, simplicity, long-term structure), and general overview of chosen tech.
@@ -92,7 +109,12 @@ Quote:
 
 ---
 
-## 7. Final Thoughts
+## 7. Database Schema
+![Database Schema](EduCentarDB.png)
+
+---
+
+## 8. Final Thoughts
 
 
 > The balance between performance and structure feels right.

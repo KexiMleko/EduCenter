@@ -17,11 +17,11 @@ public sealed record RegisterUserCommand(
 
 public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserViewModel>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _uow;
     private readonly IPasswordHashService _hasher;
-    public RegisterUserHandler(IUserRepository userRepository, IPasswordHashService hasher)
+    public RegisterUserHandler(IUnitOfWork uow, IPasswordHashService hasher)
     {
-        _userRepository = userRepository;
+        _uow = uow;
         _hasher = hasher;
     }
     public async Task<UserViewModel> Handle(RegisterUserCommand request, CancellationToken ct)
@@ -39,8 +39,8 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserView
             CreatedAt = DateTime.UtcNow,
             IsActive = true
         };
-        var userView = await _userRepository.AddUser(user, ct);
-        await _userRepository.SaveChangesAsync(ct);
+        var userView = await _uow.users.AddUser(user, ct);
+        await _uow.SaveChangesAsync(ct);
         return userView;
     }
 }

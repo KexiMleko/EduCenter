@@ -13,7 +13,7 @@ public class UserController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("add")]
-    [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status201Created)]
+    //[ProducesResponseType(typeof(UserViewModel), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create(RegisterUserCommand cmd, CancellationToken ct)
     {
         var userView = await _mediator.Send(cmd, ct);

@@ -53,8 +53,7 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DevConnection")));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.Configure<Argon2Options>(options => { });
 builder.Services.AddSingleton<IPasswordHashService, Argon2PasswordHasher>();
-// NOTE: repositoreis
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

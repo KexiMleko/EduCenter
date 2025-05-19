@@ -11,17 +11,26 @@ public class UserRepository : IUserRepository
     {
         _appContext = appContext;
     }
-    public async Task<User> AddUser(User user, CancellationToken ct)
+    public User AddUser(User user)
     {
-        await _appContext.Users.AddAsync(user, ct);
+        _appContext.Users.Add(user);
         return user;
     }
     public async Task<User> GetUserByUsername(string username, CancellationToken ct)
     {
         return await _appContext.Users.Where(u => u.Username == username).FirstOrDefaultAsync(ct);
     }
-    public async Task UpdateRefreshToken(RefreshToken token, CancellationToken ct)
+    public void UpdateRefreshToken(RefreshToken token)
     {
-        await _appContext.RefreshTokens.AddAsync(token, ct);
+        _appContext.RefreshTokens.Add(token);
+    }
+    public void AddUserRole(int userId, int roleId)
+    {
+        var userRole = new UserRole
+        {
+            UserId = userId,
+            RoleId = roleId
+        };
+        _appContext.UserRoles.Add(userRole);
     }
 }

@@ -34,7 +34,7 @@ public class LoginHandler : IRequestHandler<LoginCommand, Unit>
             ExpiresAt = DateTime.UtcNow.AddDays(Int32.Parse(_configuration["Jwt:RefreshTokenExpiry"] ?? "7")),
             Token = _jwtHelper.GenerateRefreshToken()
         };
-        await _uow.users.UpdateRefreshToken(refreshToken, ct);
+        _uow.users.UpdateRefreshToken(refreshToken);
         var response = _httpContextAccessor.HttpContext?.Response;
         if (response != null)
         {
@@ -43,7 +43,7 @@ public class LoginHandler : IRequestHandler<LoginCommand, Unit>
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddMinutes(Int32.Parse(_configuration["Jwt:AccessTokenExpiry"] ?? "7"))
+                Expires = DateTime.UtcNow.AddMinutes(Int32.Parse(_configuration["Jwt:AccessTokenExpiry"] ?? "15"))
             });
             response.Cookies.Append("RefreshToken", refreshToken.Token, new CookieOptions
             {
@@ -53,6 +53,7 @@ public class LoginHandler : IRequestHandler<LoginCommand, Unit>
                 Expires = refreshToken.ExpiresAt
             });
         }
+        await _uow.SaveChangesAsync(ct);
         return Unit.Value;
     }
 }

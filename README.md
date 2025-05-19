@@ -1,3 +1,21 @@
 # EduCenter
-Database design
-https://lucid.app/lucidchart/a458ef86-984a-4b86-aa45-8ab897c48de0/edit?viewport_loc=-643%2C-927%2C4037%2C1993%2C0_0&invitationId=inv_c983961f-8098-4994-9355-acfb7a045f4c
+
+## Project Overview
+
+**EduCenter** is a modular platform built to support educational institutions 
+in managing core activities such as student preparation, scheduling, and performance tracking and other core activities.
+
+---
+
+## Decision Documentation
+
+All architectural and implementation decisions are documented [**here**](/Docs/Decisions/overview.md).  
+This includes:
+
+- Project constraints and design goals
+- Backend architecture and design patterns (e.g., vertical slice, CQRS)
+- Frontend technology and structure
+- Deployment strategies and environment configuration
+
+---
+

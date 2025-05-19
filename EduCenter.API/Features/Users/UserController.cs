@@ -5,6 +5,7 @@ using MediatR;
 using EduCenter.API.Features.Users.DTOs;
 using System;
 using EduCenter.API.Features.Users.GetUserById;
+using EduCenter.API.Features.Users.AssignRole;
 
 namespace EduCenter.API.Features.Users;
 public class UserController : BaseApiController
@@ -29,5 +30,11 @@ public class UserController : BaseApiController
         var query = new GetUserByIdQuery(id);
         UserViewModel user = await _mediator.Send(query, ct);
         return user == null ? NotFound() : Ok(user);
+    }
+    [HttpPost("assign-role")]
+    public async Task<IActionResult> AssignRole(AssignRoleCommand request, CancellationToken ct)
+    {
+        await _mediator.Send(request, ct);
+        return Ok();
     }
 }

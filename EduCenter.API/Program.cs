@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using EduCenter.API.Shared.Services.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,23 +37,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             OnMessageReceived = context =>
             {
                 // Allows SignalR connections to use the token
-                var accessToken = context.Request.Query["access_token"];
+                var accessToken = context.Request.Cookies["AccessToken"];
 
                 if (!string.IsNullOrEmpty(accessToken) &&
                     context.HttpContext.Request.Path.StartsWithSegments("/chathub"))
                 {
                     context.Token = accessToken;
                 }
-
+                if (!string.IsNullOrEmpty(accessToken))
+                {
+                    context.Token = accessToken;
+                }
                 return Task.CompletedTask;
             }
         };
     });
-
+builder.Services.AddScoped<IJwtHelper, JwtHelper>();
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DevConnection"))
            .UseSnakeCaseNamingConvention());
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.Configure<Argon2Options>(options => { });
 builder.Services.AddSingleton<IPasswordHashService, Argon2PasswordHasher>();

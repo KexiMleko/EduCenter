@@ -25,7 +25,7 @@ public class SubjectController : BaseApiController
         await _mediator.Send(request);
         return Ok();
     }
-    [HttpGet("get-all-subjects")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllSubjects()
     {
         var request = new GetAllSubjectsQuery();

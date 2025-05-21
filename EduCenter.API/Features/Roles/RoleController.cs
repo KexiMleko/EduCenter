@@ -25,7 +25,7 @@ public class RoleController : BaseApiController
         await _mediator.Send(request);
         return Ok();
     }
-    [HttpGet("get-all-roles")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllRoles()
     {
         var request = new GetAllRolesQuery();

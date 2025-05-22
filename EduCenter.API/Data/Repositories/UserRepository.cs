@@ -3,7 +3,7 @@ using EduCenter.API.Data.Models;
 using EduCenter.API.Features.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace EduCenter.API.Base.Repositories;
+namespace EduCenter.API.Data.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly DatabaseContext _appContext;

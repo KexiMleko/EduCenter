@@ -13,13 +13,13 @@ public class RoleController : BaseApiController
     {
         _mediator = mediator;
     }
-    [HttpPost("create-role")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateRole(CreateRoleCommand request)
     {
         await _mediator.Send(request);
         return Ok();
     }
-    [HttpPost("update-role")]
+    [HttpPost("update")]
     public async Task<IActionResult> UpdateRole(UpdateRoleCommand request)
     {
         await _mediator.Send(request);

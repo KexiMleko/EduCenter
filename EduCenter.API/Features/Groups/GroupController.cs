@@ -12,13 +12,13 @@ public class GroupController : BaseApiController
     {
         _mediator = mediator;
     }
-    [HttpPost("create-role")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateGroup(CreateGroupCommand request)
     {
         await _mediator.Send(request);
         return Ok();
     }
-    [HttpPost("update-role")]
+    [HttpPost("update")]
     public async Task<IActionResult> UpdateGroup(UpdateGroupCommand request)
     {
         await _mediator.Send(request);

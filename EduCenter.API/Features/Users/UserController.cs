@@ -3,7 +3,6 @@ using EduCenter.API.Features.Users.RegisterUser;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using EduCenter.API.Features.Users.DTOs;
-using System;
 using EduCenter.API.Features.Users.GetUserById;
 using EduCenter.API.Features.Users.AssignRole;
 
@@ -15,7 +14,7 @@ public class UserController : BaseApiController
     {
         _mediator = mediator;
     }
-    [HttpPost("add")]
+    [HttpPost("create")]
     [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] RegisterUserCommand cmd, CancellationToken ct)
     {

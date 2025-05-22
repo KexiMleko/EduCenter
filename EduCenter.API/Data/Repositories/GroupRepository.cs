@@ -3,7 +3,7 @@ using EduCenter.API.Data;
 using EduCenter.API.Data.Models;
 using EduCenter.API.Features.Groups;
 
-namespace EduCenter.API.Base.Repositories;
+namespace EduCenter.API.Data.Repositories;
 public class GroupRepository : IGroupRepository
 {
     private readonly DatabaseContext _appContext;

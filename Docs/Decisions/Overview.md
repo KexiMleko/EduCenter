@@ -47,4 +47,4 @@ They will use the platform to manage financial records, track student progress, 
 | [Architecture](architecture.md) | Monolithic backend + SPA frontend, REST communication |
 | [Backend](backend.md)       | ASP.NET Core,EF Core, raw SQL via dapper, Vertical slices architecture     |
 | [Frontend](frontend.md)     | Angular 19, modular feature folders, service-based API calls |
-| [Deployment](../deployment/README.md) | |
+| [Deployment](../deployment/README.md) | Self hosted on bare metal proxmox server|

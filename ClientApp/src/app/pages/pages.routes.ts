@@ -13,4 +13,8 @@ export const PagesRoutes: Routes = [
     //   ],
     // },
   },
+  {
+    path: '**',
+    component: HomeComponent
+  }
 ];

@@ -12,19 +12,19 @@ public class LevelOfStudyController : BaseApiController
     {
         _mediator = mediator;
     }
-    [HttpPost("create-role")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateLevelOfStudy(CreateLevelOfStudyCommand request)
     {
         await _mediator.Send(request);
         return Ok();
     }
-    [HttpPost("update-role")]
+    [HttpPost("update")]
     public async Task<IActionResult> UpdateLevelOfStudy(UpdateLevelOfStudyCommand request)
     {
         await _mediator.Send(request);
         return Ok();
     }
-    [HttpGet("get-all-roles")]
+    [HttpGet("get-alls")]
     public async Task<IActionResult> GetAllLevelsOfStudy()
     {
         var request = new GetAllLevelsOfStudyQuery();

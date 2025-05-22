@@ -37,6 +37,14 @@ public class DatabaseContext : DbContext
         ConfigureEnrollment(modelBuilder);
         ConfigurePayment(modelBuilder);
     }
+    public void ConfigureUser(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasIndex(u => u.Email).IsUnique();
+            entity.HasIndex(u => u.Username).IsUnique();
+        });
+    }
     public void ConfigureUserRole(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserRole>(entity =>
@@ -145,7 +153,6 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<Enrollment>(entity =>
         {
             entity.HasOne<Group>().WithMany().HasForeignKey(e => e.GroupId).OnDelete(DeleteBehavior.NoAction);
-            entity.HasOne<Student>().WithMany().HasForeignKey(e => e.StudentId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne<PaymentPlan>().WithMany().HasForeignKey(e => e.PaymentPlanId).OnDelete(DeleteBehavior.NoAction);
         });
     }

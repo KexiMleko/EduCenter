@@ -1,6 +1,6 @@
 using System.Text;
 using EFCore.NamingConventions;
-using EduCenter.API.Base.Repositories;
+using EduCenter.API.Data.Repositories;
 using EduCenter.API.Data;
 using EduCenter.API.Features.Users;
 using EduCenter.API.Shared.Services.Hashing;

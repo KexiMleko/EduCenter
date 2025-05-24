@@ -1,34 +1,26 @@
 using EduCenter.API.Data.Models;
-using EduCenter.API.Shared.Services.Hashing;
 using EduCenter.API.Shared.Services.JWT;
 using MediatR;
-
-namespace EduCenter.API.Features.Auth;
-public sealed record LoginCommand(string username, string password) : IRequest<Unit>;
-public class LoginHandler : IRequestHandler<LoginCommand, Unit>
+namespace EduCenter.API.Features.Auth.RefreshTokens;
+public sealed record RefreshTokensCommand(string token) : IRequest<Unit>;
+public class RefreshTokensHandler : IRequestHandler<RefreshTokensCommand, Unit>
 {
     private readonly IUnitOfWork _uow;
-    private readonly IPasswordHashService _hasher;
     private readonly IJwtHelper _jwtHelper;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IConfiguration _configuration;
 
-    public LoginHandler(IUnitOfWork uow, IPasswordHashService hasher, IJwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
+
+    public RefreshTokensHandler(IUnitOfWork uow, IJwtHelper jwtHelper, IHttpContextAccessor httpContext, IConfiguration configuration)
     {
         _uow = uow;
-        _hasher = hasher;
         _jwtHelper = jwtHelper;
-        _httpContextAccessor = httpContextAccessor;
+        _httpContextAccessor = httpContext;
         _configuration = configuration;
     }
-    public async Task<Unit> Handle(LoginCommand request, CancellationToken ct)
+    public async Task<Unit> Handle(RefreshTokensCommand request, CancellationToken cancellationToken)
     {
-        User user = await _uow.users.GetUserByUsername(request.username, ct);
-        if (user == null)
-            throw new UnauthorizedAccessException("Invalid username or password");
-        bool isValid = _hasher.VerifyPassword(request.password, user.PasswordHash);
-        if (!isValid)
-            throw new UnauthorizedAccessException("Invalid username or password");
+        var user = await _uow.users.GetUserByRefreshToken(request.token);
         var accessToken = _jwtHelper.GenerateAccessToken(user);
         var refreshToken = new RefreshToken
         {
@@ -55,7 +47,7 @@ public class LoginHandler : IRequestHandler<LoginCommand, Unit>
                 Expires = refreshToken.ExpiresAt
             });
         }
-        await _uow.SaveChangesAsync(ct);
+        await _uow.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
 }

@@ -22,7 +22,19 @@ public class UserRepository : IUserRepository
     }
     public void UpdateRefreshToken(RefreshToken token)
     {
-        _appContext.RefreshTokens.Add(token);
+        var existingToken = _appContext.RefreshTokens
+        .FirstOrDefault(t => t.UserId == token.UserId);
+
+        if (existingToken == null)
+        {
+            _appContext.RefreshTokens.Add(token);
+        }
+        else
+        {
+            existingToken.Token = token.Token;
+            existingToken.ExpiresAt = token.ExpiresAt;
+            existingToken.CreatedAt = token.CreatedAt;
+        }
     }
     public void AddUserRole(int userId, int roleId)
     {
@@ -32,5 +44,16 @@ public class UserRepository : IUserRepository
             RoleId = roleId
         };
         _appContext.UserRoles.Add(userRole);
+    }
+    public async Task<User> GetUserByRefreshToken(string token)
+    {
+        var tokenWithUser = await _appContext.RefreshTokens.Include(t => t.User).FirstOrDefaultAsync(t => t.Token == token);
+        if (tokenWithUser == null) throw new Exception("Refresh token not found!");
+        if (tokenWithUser.ExpiresAt <= DateTime.UtcNow) throw new Exception("Refresh token expired!");
+        return tokenWithUser.User;
+    }
+    public void DeleteRefreshToken(string token)
+    {
+        _appContext.RefreshTokens.Where(t => t.Token == token).ExecuteDelete();
     }
 }

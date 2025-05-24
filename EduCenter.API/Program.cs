@@ -39,11 +39,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 // Allows SignalR connections to use the token
                 var accessToken = context.Request.Cookies["AccessToken"];
 
-                if (!string.IsNullOrEmpty(accessToken) &&
-                    context.HttpContext.Request.Path.StartsWithSegments("/chathub"))
-                {
-                    context.Token = accessToken;
-                }
                 if (!string.IsNullOrEmpty(accessToken))
                 {
                     context.Token = accessToken;

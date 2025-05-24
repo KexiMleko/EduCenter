@@ -65,7 +65,7 @@ public class DatabaseContext : DbContext
     {
         modelBuilder.Entity<RefreshToken>(entity =>
         {
-            entity.HasOne<User>().WithMany().HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne<User>(r => r.User).WithMany().HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Cascade);
             entity.HasIndex(rt => new { rt.UserId, rt.Token }).IsUnique();
         });
     }

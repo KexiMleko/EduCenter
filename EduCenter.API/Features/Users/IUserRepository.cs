@@ -6,4 +6,6 @@ public interface IUserRepository
     public Task<User> GetUserByUsername(string username, CancellationToken ct);
     public void UpdateRefreshToken(RefreshToken token);
     public void AddUserRole(int userId, int roleId);
+    public Task<User> GetUserByRefreshToken(string token);
+    public void DeleteRefreshToken(string token);
 }

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduCenter.API.Base;
@@ -7,11 +8,10 @@ namespace EduCenter.API.Base;
 [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
 public class BaseApiController : ControllerBase
 {
-    // TODO: implement this!
     [NonAction]
     public int GetSenderId()
     {
-        return 1;
+        return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
     }
 
 }

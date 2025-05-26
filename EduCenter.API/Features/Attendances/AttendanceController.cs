@@ -13,9 +13,9 @@ public class AttendanceController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("mark")]
-    public async Task<IActionResult> MarkAttendance(MarkAttendanceCommand request)
+    public async Task<IActionResult> MarkAttendance(MarkAttendanceCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
 }

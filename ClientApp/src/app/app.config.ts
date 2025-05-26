@@ -1,3 +1,5 @@
+
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import {
   ApplicationConfig,
   provideZoneChangeDetection,
@@ -28,27 +30,32 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/auth.interceptor';
+import { provideHotToastConfig } from '@ngxpert/hot-toast';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(
-      routes,
-      withInMemoryScrolling({
-        scrollPositionRestoration: 'enabled',
-        anchorScrolling: 'enabled',
-      }),
-      withComponentInputBinding()
-    ),
-    provideHttpClient(withInterceptors([authInterceptor])),
-    provideClientHydration(),
-    provideAnimationsAsync(),
-    importProvidersFrom(
-      FormsModule,
-      ReactiveFormsModule,
-      MaterialModule,
-      TablerIconsModule.pick(TablerIcons),
-      NgScrollbarModule,
-    ),
+  providers: [{
+    provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    useValue: { appearance: 'outline' },
+  },
+  provideZoneChangeDetection({ eventCoalescing: true }),
+  provideRouter(
+    routes,
+    withInMemoryScrolling({
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+    }),
+    withComponentInputBinding()
+  ),
+  provideHttpClient(withInterceptors([authInterceptor])),
+  provideClientHydration(),
+  provideAnimationsAsync(),
+  importProvidersFrom(
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    TablerIconsModule.pick(TablerIcons),
+    NgScrollbarModule,
+  ),
+  provideHotToastConfig(),
   ],
 };

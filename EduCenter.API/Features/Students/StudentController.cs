@@ -19,22 +19,22 @@ public class StudentController : BaseApiController
         return Ok();
     }
     [HttpPost("create")]
-    public async Task<IActionResult> CreateStudent(CreateStudentCommand request)
+    public async Task<IActionResult> CreateStudent(CreateStudentCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpPost("update")]
-    public async Task<IActionResult> UpdateStudent(UpdateStudentCommand request)
+    public async Task<IActionResult> UpdateStudent(UpdateStudentCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllStudents()
+    public async Task<IActionResult> GetAllStudents(CancellationToken ct)
     {
         var request = new GetAllStudentsQuery();
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, ct);
         return Ok(result);
     }
 

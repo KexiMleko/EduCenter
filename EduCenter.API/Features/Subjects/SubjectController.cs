@@ -14,22 +14,22 @@ public class SubjectController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("create-subject")]
-    public async Task<IActionResult> CreateSubject(CreateSubjectCommand request)
+    public async Task<IActionResult> CreateSubject(CreateSubjectCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpPost("update-subject")]
-    public async Task<IActionResult> UpdateSubject(UpdateSubjectCommand request)
+    public async Task<IActionResult> UpdateSubject(UpdateSubjectCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllSubjects()
+    public async Task<IActionResult> GetAllSubjects(CancellationToken ct)
     {
         var request = new GetAllSubjectsQuery();
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, ct);
         return Ok(result);
     }
 }

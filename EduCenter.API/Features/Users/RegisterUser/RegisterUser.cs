@@ -13,9 +13,9 @@ public sealed record RegisterUserCommand(
         string LastName,
         string PhoneNumber,
         string Address,
-        string? Note) : IRequest<UserViewModel>;
+        string? Note) : IRequest<Unit>;
 
-public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserViewModel>
+public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Unit>
 {
     private readonly IUnitOfWork _uow;
     private readonly IPasswordHashService _hasher;
@@ -24,7 +24,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserView
         _uow = uow;
         _hasher = hasher;
     }
-    public async Task<UserViewModel> Handle(RegisterUserCommand request, CancellationToken ct)
+    public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken ct)
     {
         var user = new User
         {
@@ -39,19 +39,9 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserView
             CreatedAt = DateTime.UtcNow,
             IsActive = true
         };
-        user = _uow.users.AddUser(user);
+        _uow.users.AddUser(user);
         await _uow.SaveChangesAsync(ct);
-        return new UserViewModel
-        {
-            Id = user.Id,
-            Username = user.Username,
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address,
-            Note = user.Note
-        };
+        return Unit.Value;
     }
 }
 

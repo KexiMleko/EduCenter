@@ -1,18 +1,22 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { AddUserComponent } from './users/add-user/add-user.component';
 
 export const PagesRoutes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: HomeComponent,
-    // data: {
-    //   title: 'Starter',
-    //   urls: [
-    //     { title: 'Dashboard', url: '/home' },
-    //     { title: 'Starter' },
-    //   ],
-    // },
   },
+  {
+    path: 'users',
+    component: UserListComponent
+  },
+  {
+    path: 'users/add',
+    component: AddUserComponent
+  },
+
   {
     path: '**',
     component: HomeComponent

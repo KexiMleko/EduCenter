@@ -28,29 +28,23 @@
           </div>
           <div class="or-border m-t-30">or sign in with</div>
 
-          <!-- FIXED: Added [formGroup] binding and (ngSubmit) -->
           <form [formGroup]="form" (ngSubmit)="submit()" class="m-t-30">
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Username</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <!-- FIXED: Added formControlName -->
               <input matInput formControlName="uname" />
-              <!-- FIXED: Added error handling -->
               <mat-error *ngIf="f.uname.invalid && f.uname.touched">
                 <span *ngIf="f.uname.errors?.['required']">Username is required</span>
                 <span *ngIf="f.uname.errors?.['minlength']">Username must be at least 4 characters</span>
               </mat-error>
             </mat-form-field>
 
-            <!-- password -->
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <!-- FIXED: Added formControlName -->
               <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Toggle password visibility'"
                 type="button">
                 <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
-              <!-- FIXED: Added error handling -->
               <mat-error *ngIf="f.password.invalid && f.password.touched">
                 <span *ngIf="f.password.errors?.['required']">Password is required</span>
               </mat-error>
@@ -62,7 +56,6 @@
                 ?</a>
             </div>
 
-            <!-- FIXED: Changed to type="submit" and disabled when form is invalid -->
             <button type="submit" mat-flat-button color="primary" class="w-100" [disabled]="form.invalid">
               Sign In
             </button>

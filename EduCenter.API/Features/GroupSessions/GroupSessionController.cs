@@ -15,22 +15,22 @@ public class GroupSessionController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("create")]
-    public async Task<IActionResult> CreateGroupSession(CreateGroupSessionCommand request)
+    public async Task<IActionResult> CreateGroupSession(CreateGroupSessionCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpPost("update")]
-    public async Task<IActionResult> UpdateGroupSession(UpdateGroupSessionCommand request)
+    public async Task<IActionResult> UpdateGroupSession(UpdateGroupSessionCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllGroupSessions()
+    public async Task<IActionResult> GetAllGroupSessions(CancellationToken ct)
     {
         var request = new GetAllGroupSessionsQuery();
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, ct);
         return Ok(result);
     }
 }

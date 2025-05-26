@@ -13,22 +13,22 @@ public class LevelOfStudyController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("create")]
-    public async Task<IActionResult> CreateLevelOfStudy(CreateLevelOfStudyCommand request)
+    public async Task<IActionResult> CreateLevelOfStudy(CreateLevelOfStudyCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpPost("update")]
-    public async Task<IActionResult> UpdateLevelOfStudy(UpdateLevelOfStudyCommand request)
+    public async Task<IActionResult> UpdateLevelOfStudy(UpdateLevelOfStudyCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpGet("get-alls")]
-    public async Task<IActionResult> GetAllLevelsOfStudy()
+    public async Task<IActionResult> GetAllLevelsOfStudy(CancellationToken ct)
     {
         var request = new GetAllLevelsOfStudyQuery();
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, ct);
         return Ok(result);
     }
 }

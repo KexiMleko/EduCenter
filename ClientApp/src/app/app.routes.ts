@@ -9,18 +9,13 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
       },
       {
-        path: 'home',
+        path: '',
         loadChildren: () =>
           import('./pages/pages.routes').then((m) => m.PagesRoutes),
-      },
-      {
-        path: 'extra',
-        loadChildren: () =>
-          import('./pages/extra/extra.routes').then((m) => m.ExtraRoutes),
       },
     ],
   },
@@ -39,6 +34,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/home',
+    redirectTo: '/dashboard',
   },
 ];

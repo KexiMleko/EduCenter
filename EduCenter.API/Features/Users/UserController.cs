@@ -19,7 +19,7 @@ public class UserController : BaseApiController
     public async Task<IActionResult> Create([FromBody] RegisterUserCommand cmd, CancellationToken ct)
     {
         var user = await _mediator.Send(cmd, ct);
-        return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+        return Ok();
     }
     [HttpGet("get-by-id/{id}")]
     [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]

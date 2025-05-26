@@ -13,22 +13,22 @@ public class GroupController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("create")]
-    public async Task<IActionResult> CreateGroup(CreateGroupCommand request)
+    public async Task<IActionResult> CreateGroup(CreateGroupCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpPost("update")]
-    public async Task<IActionResult> UpdateGroup(UpdateGroupCommand request)
+    public async Task<IActionResult> UpdateGroup(UpdateGroupCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllGroups()
+    public async Task<IActionResult> GetAllGroups(CancellationToken ct)
     {
         var request = new GetAllGroupsQuery();
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, ct);
         return Ok(result);
     }
 }

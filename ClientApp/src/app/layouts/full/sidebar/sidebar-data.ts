@@ -2,39 +2,151 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
+    navCap: 'Dashboard',
   },
   {
     displayName: 'Početna',
     iconName: 'home',
     route: '/home',
   },
+
   {
     divider: true,
-    navCap: 'Apps',
+    navCap: 'Korisnici',
   },
   {
-    displayName: 'Djaci',
-    iconName: 'solar:atom-line-duotone',
-    route: '/students',
+    displayName: 'Korisnici',
+    iconName: 'users',
+    children: [
+      {
+        displayName: 'Lista korisnika',
+        route: '/users',
+        iconName: 'list',
+      },
+      {
+        displayName: 'Dodaj korisnika',
+        route: '/users/add',
+        iconName: 'user-plus',
+      },
+      {
+        displayName: 'Role i prava',
+        route: '/users/roles',
+        iconName: 'shield-lock',
+      },
+    ],
+    subItemIcon: true,
   },
   {
-    displayName: 'Nastavnici',
-    iconName: 'school',
-    route: '/teachers',
+    navCap: 'Učenici',
   },
+  {
+    displayName: 'Učenici',
+    iconName: 'id',
+    children: [
+      {
+        displayName: 'Lista učenika',
+        route: '/students',
+        iconName: 'list',
+      },
+      {
+        displayName: 'Dodaj učenika',
+        route: '/students/add',
+        iconName: 'user-plus',
+      },
+      {
+        displayName: 'Upis u grupe',
+        route: '/students/enroll',
+        iconName: 'user-check',
+      },
+      {
+        displayName: 'Uplate',
+        route: '/students/payments',
+        iconName: 'cash',
+      },
+      {
+        displayName: 'Napredak',
+        route: '/students/progress',
+        iconName: 'chart-line',
+      },
+    ],
+    subItemIcon: true,
+  },
+
+
+  {
+    divider: true,
+    navCap: 'Grupe i časovi',
+  },
+  {
+    displayName: 'Grupe',
+    iconName: 'layout-grid',
+    route: '/groups',
+  },
+  {
+    displayName: 'Časovi',
+    iconName: 'calendar',
+    route: '/sessions',
+  },
+  {
+    displayName: 'Individualni časovi',
+    iconName: 'user-circle',
+    route: '/sessions/individual',
+  },
+
+  {
+    divider: true,
+    navCap: 'Predmeti i nivoi',
+  },
+  {
+    displayName: 'Predmeti',
+    iconName: 'book',
+    route: '/subjects',
+  },
+  {
+    displayName: 'Nivoi',
+    iconName: 'stairs',
+    route: '/levels',
+  },
+
+  {
+    divider: true,
+    navCap: 'Finansije',
+  },
+  {
+    displayName: 'Uplate i planovi',
+    iconName: 'cash',
+    route: '/payments',
+  },
+  {
+    displayName: 'Fakture i izveštaji',
+    iconName: 'report-money',
+    route: '/payments/reports',
+  },
+
   {
     divider: true,
     navCap: 'Statistika',
   },
   {
-    displayName: 'Popularnost predmeta',
-    iconName: 'graph',
-    route: '/teachers',
-  },
-  {
-    displayName: 'Finansije',
-    iconName: 'report-money',
-    route: '/teachers',
+    displayName: 'Analitika',
+    iconName: 'chart-bar',
+    children: [
+      {
+        displayName: 'Prisustvo',
+        route: '/analytics/attendance',
+        iconName: 'calendar-check',
+      },
+      {
+        displayName: 'Efikasnost nastavnika',
+        route: '/analytics/teachers',
+        iconName: 'award',
+      },
+      {
+        displayName: 'Iskorišćenost časova',
+        route: '/analytics/sessions',
+        iconName: 'clock-hour-10',
+      },
+    ],
+    subItemIcon: true,
   },
 ];

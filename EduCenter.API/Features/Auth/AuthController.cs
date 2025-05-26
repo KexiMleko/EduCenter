@@ -41,7 +41,7 @@ public class AuthController : BaseApiController
             return Unauthorized();
         }
     }
-    [HttpDelete("logout")]
+    [HttpGet("logout")]
     public async Task<IActionResult> Logout(CancellationToken ct)
     {
         var token = Request.Cookies["RefreshToken"];

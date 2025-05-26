@@ -14,22 +14,22 @@ public class RoleController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("create")]
-    public async Task<IActionResult> CreateRole(CreateRoleCommand request)
+    public async Task<IActionResult> CreateRole(CreateRoleCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpPost("update")]
-    public async Task<IActionResult> UpdateRole(UpdateRoleCommand request)
+    public async Task<IActionResult> UpdateRole(UpdateRoleCommand request, CancellationToken ct)
     {
-        await _mediator.Send(request);
+        await _mediator.Send(request, ct);
         return Ok();
     }
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllRoles()
+    public async Task<IActionResult> GetAllRoles(CancellationToken ct)
     {
         var request = new GetAllRolesQuery();
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, ct);
         return Ok(result);
     }
 }

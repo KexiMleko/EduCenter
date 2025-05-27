@@ -4,27 +4,11 @@ import { FullComponent } from './layouts/full/full.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    component: FullComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/pages.routes').then((m) => m.PagesRoutes),
-      },
-    ],
-  },
-  {
-    path: '',
+    path: 'auth',
     component: BlankComponent,
     children: [
       {
-        path: 'auth',
+        path: '',
         loadChildren: () =>
           import('./pages/authentication/authentication.routes').then(
             (m) => m.AuthenticationRoutes
@@ -32,6 +16,18 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: '',
+    component: FullComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/pages.routes').then((m) => m.PagesRoutes),
+      },
+    ],
+  },
+
   {
     path: '**',
     redirectTo: '/dashboard',

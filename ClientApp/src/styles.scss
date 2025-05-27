@@ -1,7 +1,4 @@
-/* Importing @ngxpert/hot-toast SCSS file. */
-@use '@ngxpert/hot-toast/styles';
 /* You can add global styles to this file, and also import other style files */
-
 
 html,
 body {
@@ -11,4 +8,172 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.component-card {
+  margin: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .mat-mdc-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    margin: -16px -16px 16px -16px;
+    padding: 24px;
+    border-radius: 4px 4px 0 0;
+
+    .mat-mdc-card-title {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .mat-mdc-card-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.data-table {
+  width: 100%;
+  background: white;
+
+  .mat-mdc-header-cell {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+    padding: 16px 12px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .mat-mdc-cell {
+    padding: 16px 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .data-row {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+  }
+}
+
+.no-data-p {
+  justify-self: center;
+}
+
+// Column specific styles
+.email-link,
+.phone-link {
+  color: #1976d2;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.address-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+// Note column styles
+.note-cell {
+  max-width: 200px;
+}
+
+.note-container {
+  .note-preview {
+    display: block;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+    cursor: help;
+    padding: 4px 0;
+  }
+}
+
+.no-note {
+  color: #999;
+  font-style: italic;
+  font-size: 14px;
+}
+
+// Tooltip styles
+::ng-deep .note-tooltip {
+  max-width: 300px !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  white-space: pre-wrap !important;
+}
+
+// Actions column styles
+.actions-header {
+  width: 60px;
+  text-align: center;
+}
+
+.actions-cell {
+  text-align: center;
+  width: 60px;
+}
+
+.menu-button {
+  color: #666;
+
+  &:hover {
+    color: #333;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+::ng-deep .mat-mdc-menu-item.delete-action,
+::ng-deep .mat-mdc-menu-item.delete-action .mat-icon {
+  color: #d32f2f !important;
+}
+
+::ng-deep .mat-mdc-menu-item.delete-action:hover {
+  background-color: rgba(211, 47, 47, 0.08) !important;
+}
+
+// Chip styles
+.mat-mdc-chip {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .user-list-card {
+    margin: 8px;
+  }
+
+  .user-table {
+    font-size: 14px;
+
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+      padding: 12px 8px;
+    }
+  }
+
+  .note-cell {
+    max-width: 150px;
+  }
+
+  .address-text {
+    font-size: 12px;
+  }
 }

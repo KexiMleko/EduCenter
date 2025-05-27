@@ -1,6 +1,8 @@
 @use "sass:map";
 @use "@angular/material" as mat;
 
+/* Importing @ngxpert/hot-toast SCSS file. */
+@use '@ngxpert/hot-toast/styles';
 @use "themecolors/blue_theme";
 
 @use "variables" as *;

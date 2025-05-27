@@ -5,6 +5,11 @@ import { AddUserComponent } from './users/add-user/add-user.component';
 
 export const PagesRoutes: Routes = [
   {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
+  {
     path: 'dashboard',
     component: HomeComponent,
   },
@@ -16,9 +21,8 @@ export const PagesRoutes: Routes = [
     path: 'users/add',
     component: AddUserComponent
   },
-
   {
     path: '**',
-    component: HomeComponent
+    redirectTo: 'dashboard'
   }
 ];

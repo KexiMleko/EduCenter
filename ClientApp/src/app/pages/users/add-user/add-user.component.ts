@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../users-service/user.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { catchError, of } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-add-user',
@@ -18,6 +19,7 @@ import { catchError, of } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatCardModule,
   ],
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
@@ -57,7 +59,7 @@ export class AddUserComponent {
         catchError((error: any) => of(error))
       ).subscribe({
         next: () => {
-          this.userForm.reset();
+          this.userForm.reset({}, { emitEvent: false });
         }
       });
     }

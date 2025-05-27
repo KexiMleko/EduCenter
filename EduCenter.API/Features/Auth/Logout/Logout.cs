@@ -1,7 +1,7 @@
 using MediatR;
 
 namespace EduCenter.API.Features.Auth;
-public sealed record LogoutCommand(string token) : IRequest<Unit>;
+public sealed record LogoutCommand(string? token) : IRequest<Unit>;
 public class LogoutHandler : IRequestHandler<LogoutCommand, Unit>
 {
     IUnitOfWork _uow;
@@ -13,7 +13,8 @@ public class LogoutHandler : IRequestHandler<LogoutCommand, Unit>
     }
     public async Task<Unit> Handle(LogoutCommand request, CancellationToken cancellationToken)
     {
-        _uow.users.DeleteRefreshToken(request.token);
+        if (!String.IsNullOrEmpty(request.token))
+            _uow.users.DeleteRefreshToken(request.token);
         var response = _httpContext.HttpContext?.Response;
         if (response != null)
         {

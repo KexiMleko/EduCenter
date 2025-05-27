@@ -45,8 +45,6 @@ public class AuthController : BaseApiController
     public async Task<IActionResult> Logout(CancellationToken ct)
     {
         var token = Request.Cookies["RefreshToken"];
-        if (string.IsNullOrEmpty(token))
-            return BadRequest("Refresh token is missing.");
         await _mediator.Send(new LogoutCommand(token), ct);
         return NoContent();
     }

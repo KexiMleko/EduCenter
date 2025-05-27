@@ -10,4 +10,7 @@ export class UserService {
   addUser(user: any) {
     return this.api.post('user/create', user)
   }
+  getAllUsers() {
+    return this.api.get('user/get-all')
+  }
 }

@@ -5,8 +5,10 @@ using MediatR;
 using EduCenter.API.Features.Users.DTOs;
 using EduCenter.API.Features.Users.GetUserById;
 using EduCenter.API.Features.Users.AssignRole;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EduCenter.API.Features.Users;
+[Authorize]
 public class UserController : BaseApiController
 {
     private readonly IMediator _mediator;
@@ -20,6 +22,14 @@ public class UserController : BaseApiController
     {
         var user = await _mediator.Send(cmd, ct);
         return Ok();
+    }
+    [HttpGet("get-all")]
+    [ProducesResponseType(typeof(List<UserViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllUsers(CancellationToken ct)
+    {
+        List<UserViewModel> users = await _mediator.Send(new GetAllUsersQuery(), ct);
+        return Ok(users);
     }
     [HttpGet("get-by-id/{id}")]
     [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]

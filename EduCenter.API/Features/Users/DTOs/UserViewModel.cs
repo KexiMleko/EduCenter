@@ -9,4 +9,5 @@ public class UserViewModel
     public string PhoneNumber { get; set; } = "";
     public string Address { get; set; } = "";
     public string? Note { get; set; } = "";
+    public bool IsActive { get; set; }
 }

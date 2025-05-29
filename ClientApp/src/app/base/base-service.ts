@@ -1,5 +1,6 @@
 import { Observable } from "rxjs";
+import { PagedRequest } from "../models/wrappers/PagedRequest";
 
 export interface BaseService {
-  getPagedData(): Observable<any>
+  getPagedData(request: PagedRequest<any>): Observable<any>
 }

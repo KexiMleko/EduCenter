@@ -13,17 +13,8 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { catchError, of } from 'rxjs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-
-export interface UserViewModel {
-  id: number;
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  address: string;
-  note?: string;
-}
+import { UserViewModel } from 'src/app/models/UserViewModel';
+import { BaseTableComponent } from 'src/app/base/base-table-component';
 
 @Component({
   selector: 'app-user-list',
@@ -43,31 +34,17 @@ export interface UserViewModel {
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent extends BaseTableComponent<UserViewModel, any> implements OnInit {
   displayedColumns: string[] = ['fullName', 'username', 'email', 'phoneNumber', 'address', 'note', 'actions'];
-
-  private toast = inject(HotToastService);
-  users: UserViewModel[] = [];
-  constructor(private service: UserService) { }
-  ngOnInit(): void {
-    this.loadUsers();
+  constructor(private userService: UserService) {
+    super(userService); // explicitly pass service to base class
   }
-
-  loadUsers(): void {
-    this.service.getAllUsers().pipe(
-      this.toast.observe(
-        {
-          loading: 'Pretrazivanje...',
-          success: () => 'Uspesna pretraga',
-          error: () => 'Doslo je do greske, pokusajte ponovo',
-        }
-      ),
-      catchError((error: any) => of(error))
-    ).subscribe({
-      next: (value) => {
-        this.users = value
-      }
-    });
+  users: UserViewModel[] = [];
+  ngOnInit(): void {
+    this.loadTableData(this.getUserFilter())
+  }
+  getUserFilter() {
+    return {}
   }
   onMenuAction(action: string, user: UserViewModel): void { }
 }

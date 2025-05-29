@@ -4,7 +4,7 @@ using EduCenter.API.Features.Users.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EduCenter.API.Features.Users.GetUserById;
+namespace EduCenter.API.Features.Users.GetAllUsers;
 public sealed record GetAllUsersQuery() : IRequest<List<UserViewModel>>;
 public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserViewModel>>
 {

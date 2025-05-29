@@ -6,6 +6,9 @@ using EduCenter.API.Features.Users.DTOs;
 using EduCenter.API.Features.Users.GetUserById;
 using EduCenter.API.Features.Users.AssignRole;
 using Microsoft.AspNetCore.Authorization;
+using EduCenter.API.Features.Users.GetAllUsers;
+using EduCenter.API.Shared.Filters;
+using EduCenter.API.Features.Users.GetUsersPaged;
 
 namespace EduCenter.API.Features.Users;
 [Authorize]
@@ -23,9 +26,15 @@ public class UserController : BaseApiController
         var user = await _mediator.Send(cmd, ct);
         return Ok();
     }
+    [HttpPost("get-paged")]
+    [ProducesResponseType(typeof(PagedResult<UserViewModel>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetUsersPaged(PagedRequest<UserFilter> request, CancellationToken ct)
+    {
+        PagedResult<UserViewModel> result = await _mediator.Send(new GetUsersPagedQuery(request), ct);
+        return Ok(result);
+    }
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(List<UserViewModel>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllUsers(CancellationToken ct)
     {
         List<UserViewModel> users = await _mediator.Send(new GetAllUsersQuery(), ct);

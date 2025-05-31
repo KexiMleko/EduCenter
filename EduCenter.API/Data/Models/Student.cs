@@ -6,7 +6,7 @@ public class Student : BaseEntity
 {
     public int LevelId { get; set; }
     [MaxLength(254)]
-    public string Email { get; set; } = "";
+    public string? Email { get; set; }
     [MaxLength(50)]
     public string FirstName { get; set; } = "";
     [MaxLength(100)]

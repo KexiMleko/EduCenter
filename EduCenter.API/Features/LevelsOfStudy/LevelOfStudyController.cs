@@ -24,7 +24,7 @@ public class LevelOfStudyController : BaseApiController
         await _mediator.Send(request, ct);
         return Ok();
     }
-    [HttpGet("get-alls")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllLevelsOfStudy(CancellationToken ct)
     {
         var request = new GetAllLevelsOfStudyQuery();

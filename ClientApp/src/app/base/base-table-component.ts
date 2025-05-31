@@ -1,13 +1,17 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { BaseService } from './base-service';
 import { catchError, of } from 'rxjs';
-import { Directive, inject } from '@angular/core';
+import { AfterViewInit, Directive, inject, ViewChild } from '@angular/core';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { PagedRequest } from '../models/wrappers/PagedRequest';
 import { PagedResult } from '../models/wrappers/PagedResult';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
 @Directive()
-export abstract class BaseTableComponent<TData = any, TFilter = any> {
+export abstract class BaseTableComponent<TData = any, TFilter = any> implements AfterViewInit {
+  @ViewChild(MatSort) sort!: MatSort;
+
   dataSource = new MatTableDataSource<TData>();
   totalCount: number;
   startIndex: number;
@@ -15,7 +19,9 @@ export abstract class BaseTableComponent<TData = any, TFilter = any> {
   toast = inject(HotToastService);
 
   constructor(private service: BaseService) { }
-
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
   loadTableData(filter: TFilter): void {
     console.log(this.limit)
     this.service.getPagedData(this.createPagedRequest(filter)).pipe(

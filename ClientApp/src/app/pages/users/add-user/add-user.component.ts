@@ -1,13 +1,13 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { UserService } from '../users-service/user.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { catchError, of } from 'rxjs';
+import { UserService } from 'src/app/services/api/user.service';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -19,12 +19,13 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule,
+    MatCardModule
   ],
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
 })
 export class AddUserComponent {
+  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
   userForm: FormGroup;
 
   private toast = inject(HotToastService);
@@ -39,9 +40,6 @@ export class AddUserComponent {
       address: [''],
       note: [''],
     });
-  }
-  showToast() {
-    this.toast.show('Hello World!')
   }
   onSubmit() {
     if (this.userForm.valid) {
@@ -59,7 +57,7 @@ export class AddUserComponent {
         catchError((error: any) => of(error))
       ).subscribe({
         next: () => {
-          this.userForm.reset({}, { emitEvent: false });
+          this.formDirective.resetForm();
         }
       });
     }

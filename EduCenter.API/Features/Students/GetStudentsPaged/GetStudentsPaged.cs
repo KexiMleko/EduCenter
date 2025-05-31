@@ -1,27 +1,26 @@
-
-using System.Text;
 using Dapper;
 using EduCenter.API.Data;
-using EduCenter.API.Features.Users.DTOs;
+using EduCenter.API.Features.Students.DTOs;
 using EduCenter.API.Shared.Filters;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EduCenter.API.Features.Users.GetUsersPaged;
-public sealed record GetUsersPagedQuery(PagedRequest<UserFilter> request) : IRequest<PagedResult<UserViewModel>>;
-public class GetUsersPagedHandler : IRequestHandler<GetUsersPagedQuery, PagedResult<UserViewModel>>
+namespace EduCenter.API.Features.Students.GetStudentsPaged;
+public sealed record GetStudentsPagedQuery(PagedRequest<StudentFilter> request) : IRequest<PagedResult<StudentViewModel>>;
+public class GetStudentsPagedHandler : IRequestHandler<GetStudentsPagedQuery, PagedResult<StudentViewModel>>
 {
     private readonly DatabaseContext _appContext;
-    public GetUsersPagedHandler(DatabaseContext appContext)
+    public GetStudentsPagedHandler(DatabaseContext appContext)
     {
         _appContext = appContext;
     }
-    public async Task<PagedResult<UserViewModel>> Handle(GetUsersPagedQuery query, CancellationToken ct)
+    public async Task<PagedResult<StudentViewModel>> Handle(GetStudentsPagedQuery query, CancellationToken ct)
     {
         var filters = query.request.Filters;
         var cte = @"WITH paged AS MATERIALIZED 
-                (SELECT id, username, email, first_name AS FirstName, last_name AS LastName, phone_number AS PhoneNumber, address, note 
-                    FROM users WHERE 1=1";
+                (SELECT s.id,s.level_id AS LevelOfStudyId,l.title AS LevelOfStudyTitle, s.email, s.first_name AS FirstName, s.last_name AS LastName,
+                s.phone_number AS PhoneNumber, s.address, s.note,s.academic_year AS AcademicYear 
+                FROM students u JOIN level_of_study l ON s.level_id=l.id WHERE 1=1";
         var parameters = new DynamicParameters();
         if (filters != null)
             ApplyFilters(cte, parameters, filters);
@@ -39,9 +38,9 @@ public class GetUsersPagedHandler : IRequestHandler<GetUsersPagedQuery, PagedRes
 
         var connection = _appContext.Database.GetDbConnection();
         using var multi = await connection.QueryMultipleAsync(command);
-        var users = (await multi.ReadAsync<UserViewModel>()).ToList();
+        var users = (await multi.ReadAsync<StudentViewModel>()).ToList();
         int totalCount = await multi.ReadSingleAsync<int>();
-        return new PagedResult<UserViewModel>
+        return new PagedResult<StudentViewModel>
         {
             Limit = query.request.Limit,
             StartIndex = query.request.StartIndex,
@@ -49,12 +48,12 @@ public class GetUsersPagedHandler : IRequestHandler<GetUsersPagedQuery, PagedRes
             Items = users.ToList(),
         };
     }
-    void ApplyFilters(string sql, DynamicParameters parameters, UserFilter filters)
+    void ApplyFilters(string sql, DynamicParameters parameters, StudentFilter filters)
     {
-        if (!string.IsNullOrWhiteSpace(filters.Username))
+        if (filters.AcademicYear != null)
         {
-            sql += " AND username ILIKE @Username";
-            parameters.Add("Username", $"%{filters.Username}%");
+            sql += " AND academic_year = @AcademicYear";
+            parameters.Add("AcademicYear", $"{filters.AcademicYear}");
         }
         if (!string.IsNullOrWhiteSpace(filters.LastName))
         {

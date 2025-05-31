@@ -20,7 +20,7 @@ public class GetStudentsPagedHandler : IRequestHandler<GetStudentsPagedQuery, Pa
         var cte = @"WITH paged AS MATERIALIZED 
                 (SELECT s.id,s.level_id AS LevelOfStudyId,l.title AS LevelOfStudyTitle, s.email, s.first_name AS FirstName, s.last_name AS LastName,
                 s.phone_number AS PhoneNumber, s.address, s.note,s.academic_year AS AcademicYear 
-                FROM students u JOIN level_of_study l ON s.level_id=l.id WHERE 1=1";
+                FROM students s JOIN levels_of_study l ON s.level_id=l.id WHERE 1=1";
         var parameters = new DynamicParameters();
         if (filters != null)
             ApplyFilters(cte, parameters, filters);

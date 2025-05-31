@@ -32,8 +32,8 @@ import { StudentService } from 'src/app/services/api/student.service';
   templateUrl: './student-list.component.html',
   styleUrl: './student-list.component.scss'
 })
-export class StudentListComponent extends BaseTableComponent {
-  displayedColumns: string[] = ['fullName', 'username', 'email', 'phoneNumber', 'address', 'note', 'actions'];
+export class StudentListComponent extends BaseTableComponent<Student, any> {
+  displayedColumns: string[] = ['fullName', 'levelOfStudy', 'AcademicYear', 'email', 'phoneNumber', 'address', 'note', 'actions'];
   constructor(private studentService: StudentService) {
     super(studentService); // explicitly pass service to base class
   }

@@ -1,7 +1,7 @@
 <mat-card class="component-card">
   <mat-card-header>
-    <mat-card-title>Lista korisnika</mat-card-title>
-    <mat-card-subtitle>Pregled svih registrovanih korisnika</mat-card-subtitle>
+    <mat-card-title>Lista studenata</mat-card-title>
+    <mat-card-subtitle>Pregled svih studenata</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
@@ -14,50 +14,56 @@
         <!-- Full Name Column -->
         <ng-container matColumnDef="fullName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Ime i prezime</th>
-          <td mat-cell *matCellDef="let user">
-            <strong>{{user.firstName}} {{user.lastName}}</strong>
+          <td mat-cell *matCellDef="let student">
+            <strong>{{student.firstName}} {{student.lastName}}</strong>
           </td>
         </ng-container>
 
-        <!-- Username Column -->
-        <ng-container matColumnDef="username">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Korisničko ime</th>
-          <td mat-cell *matCellDef="let user">
-            <mat-chip>{{user.username}}</mat-chip>
+        <!-- Level of study Column -->
+        <ng-container matColumnDef="levelOfStudy">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nivo studija</th>
+          <td mat-cell *matCellDef="let student">
+            <mat-chip>{{student.levelOfStudyTitle}}</mat-chip>
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="AcademicYear">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Godina studija</th>
+          <td mat-cell *matCellDef="let student">
+            <mat-chip>{{student.academicYear}}</mat-chip>
+          </td>
+        </ng-container>
         <!-- Email Column -->
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-          <td mat-cell *matCellDef="let user">
-            <a href="mailto:{{user.email}}" class="email-link">{{user.email}}</a>
+          <td mat-cell *matCellDef="let student">
+            <a href="mailto:{{student.email}}" class="email-link">{{student.email}}</a>
           </td>
         </ng-container>
 
         <!-- Phone Number Column -->
         <ng-container matColumnDef="phoneNumber">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefon</th>
-          <td mat-cell *matCellDef="let user">
-            <a href="tel:{{user.phoneNumber}}" class="phone-link">{{user.phoneNumber}}</a>
+          <td mat-cell *matCellDef="let student">
+            <a href="tel:{{student.phoneNumber}}" class="phone-link">{{student.phoneNumber}}</a>
           </td>
         </ng-container>
 
         <!-- Address Column -->
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresa</th>
-          <td mat-cell *matCellDef="let user">
-            <span class="address-text">{{user.address}}</span>
+          <td mat-cell *matCellDef="let student">
+            <span class="address-text">{{student.address}}</span>
           </td>
         </ng-container>
 
         <!-- Note Column -->
         <ng-container matColumnDef="note">
           <th mat-header-cell *matHeaderCellDef>Napomena</th>
-          <td mat-cell *matCellDef="let user" class="note-cell">
-            <div class="note-container" *ngIf="user.note && user.note.trim(); else noNote">
-              <span class="note-preview" [matTooltip]="user.note" matTooltipClass="note-tooltip">
-                {{user.note.length > 50 ? (user.note | slice:0:50) + '...' : user.note}}
+          <td mat-cell *matCellDef="let student" class="note-cell">
+            <div class="note-container" *ngIf="student.note && student.note.trim(); else noNote">
+              <span class="note-preview" [matTooltip]="student.note" matTooltipClass="note-tooltip">
+                {{student.note.length > 50 ? (student.note | slice:0:50) + '...' : student.note}}
               </span>
             </div>
             <ng-template #noNote>
@@ -69,20 +75,20 @@
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef class="actions-header">Akcije</th>
-          <td mat-cell *matCellDef="let user" class="actions-cell">
-            <button mat-icon-button [matMenuTriggerFor]="userMenu" class="menu-button">
+          <td mat-cell *matCellDef="let student" class="actions-cell">
+            <button mat-icon-button [matMenuTriggerFor]="studentMenu" class="menu-button">
               <mat-icon>more_vert</mat-icon>
             </button>
-            <mat-menu #userMenu="matMenu">
-              <button mat-menu-item (click)="onMenuAction('view', user)">
+            <mat-menu #studentMenu="matMenu">
+              <button mat-menu-item (click)="onMenuAction('view', student)">
                 <mat-icon>visibility</mat-icon>
                 <span>Prikaži</span>
               </button>
-              <button mat-menu-item (click)="onMenuAction('edit', user)">
+              <button mat-menu-item (click)="onMenuAction('edit', student)">
                 <mat-icon>edit</mat-icon>
                 <span>Izmeni</span>
               </button>
-              <button mat-menu-item (click)="onMenuAction('delete', user)" class="delete-action">
+              <button mat-menu-item (click)="onMenuAction('delete', student)" class="delete-action">
                 <mat-icon>delete</mat-icon>
                 <span>Obriši</span>
               </button>

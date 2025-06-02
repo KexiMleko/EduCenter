@@ -40,7 +40,7 @@ They will use the platform to manage financial records, track student progress, 
 - Limited development time (2 months)
 - Read heavy application
 
-## Summary of Major Decisions
+## Details of Major Decisions
 
 | Area        | Summary                                                                 |
 |-------------|-------------------------------------------------------------------------|

@@ -36,6 +36,19 @@ public class UserRepository : IUserRepository
             existingToken.CreatedAt = token.CreatedAt;
         }
     }
+    public void AddUserRoles(int userId, List<int> roleIds)
+    {
+        List<UserRole> roles = new List<UserRole>();
+        foreach (var roleId in roleIds)
+        {
+            roles.Add(new UserRole
+            {
+                UserId = userId,
+                RoleId = roleId
+            });
+        }
+        _appContext.UserRoles.AddRange(roles);
+    }
     public void AddUserRole(int userId, int roleId)
     {
         var userRole = new UserRole

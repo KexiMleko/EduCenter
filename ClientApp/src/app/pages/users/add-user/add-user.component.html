@@ -44,6 +44,14 @@
         </mat-form-field>
 
         <mat-form-field>
+          <mat-label>Role / Uloge</mat-label>
+          <mat-select formControlName="roleIds" required multiple>
+            @for (role of roles; track role) {
+            <mat-option [value]="role.id">{{role.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Napomena</mat-label>
           <textarea matInput formControlName="note"></textarea>
         </mat-form-field>

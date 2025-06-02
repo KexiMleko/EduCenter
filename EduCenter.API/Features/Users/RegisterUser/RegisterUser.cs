@@ -13,7 +13,9 @@ public sealed record RegisterUserCommand(
         string LastName,
         string PhoneNumber,
         string Address,
-        string? Note) : IRequest<Unit>;
+        string? Note,
+        List<int> RoleIds
+        ) : IRequest<Unit>;
 
 public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Unit>
 {
@@ -39,7 +41,12 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Unit>
             CreatedAt = DateTime.UtcNow,
             IsActive = true
         };
-        _uow.users.AddUser(user);
+        user = _uow.users.AddUser(user);
+
+        if (request.RoleIds.Count > 0)
+        {
+            _uow.users.AddUserRoles(user.Id, request.RoleIds);
+        }
         await _uow.SaveChangesAsync(ct);
         return Unit.Value;
     }

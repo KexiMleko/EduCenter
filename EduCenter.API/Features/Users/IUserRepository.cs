@@ -8,4 +8,5 @@ public interface IUserRepository
     public void AddUserRole(int userId, int roleId);
     public Task<User> GetUserByRefreshToken(string token);
     public void DeleteRefreshToken(string token);
+    public void AddUserRoles(int userId, List<int> roleIds);
 }

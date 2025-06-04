@@ -10,6 +10,7 @@ public class GroupSession : BaseEntity
     [MaxLength(500)]
     public string? Description { get; set; }
     public int TeacherId { get; set; }
+    public int ClassroomId { get; set; }
     public int GroupId { get; set; }
     public SessionStatus Status { get; set; }
 }

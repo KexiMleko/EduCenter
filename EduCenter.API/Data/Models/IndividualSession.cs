@@ -12,6 +12,7 @@ public class IndividualSession : BaseEntity
     public int TeacherId { get; set; }
     public int StudentId { get; set; }
     public int SubjectId { get; set; }
+    public int ClassroomId { get; set; }
     public int PaymentPlanId { get; set; }
     public SessionStatus Status { get; set; }
     public DateTime StartTime { get; set; }

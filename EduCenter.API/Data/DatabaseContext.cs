@@ -22,6 +22,7 @@ public class DatabaseContext : DbContext
     public DbSet<Enrollment> Enrollments { get; set; }
     public DbSet<Attendance> Attendances { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<Classroom> Classrooms { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -122,6 +123,7 @@ public class DatabaseContext : DbContext
                   .WithMany()
                   .HasForeignKey(g => g.GroupId)
                   .OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne<Classroom>().WithMany().HasForeignKey(g => g.ClassroomId).OnDelete(DeleteBehavior.Restrict);
         });
     }
     public void ConfigureAttendance(ModelBuilder modelBuilder)
@@ -145,6 +147,7 @@ public class DatabaseContext : DbContext
             entity.HasOne<Student>().WithMany().HasForeignKey(s => s.StudentId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne<User>().WithMany().HasForeignKey(s => s.TeacherId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne<Subject>().WithMany().HasForeignKey(s => s.SubjectId).OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne<Classroom>().WithMany().HasForeignKey(g => g.ClassroomId).OnDelete(DeleteBehavior.Restrict);
         });
 
     }

@@ -4,6 +4,7 @@ import { UserListComponent } from './users/user-list/user-list.component';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { AddStudentComponent } from './students/add-student/add-student.component';
 import { StudentListComponent } from './students/student-list/student-list.component';
+import { AddGroupComponent } from './groups/add-group/add-group.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -32,6 +33,10 @@ export const PagesRoutes: Routes = [
     component: AddStudentComponent
   },
 
+  {
+    path: 'group/add',
+    component: AddGroupComponent
+  },
   {
     path: '**',
     redirectTo: 'dashboard'

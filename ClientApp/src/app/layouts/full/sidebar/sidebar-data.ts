@@ -82,6 +82,12 @@ export const navItems: NavItem[] = [
     iconName: 'layout-grid',
     route: '/groups',
   },
+
+  {
+    displayName: 'Kreiraj grupu',
+    iconName: 'layout-grid-add',
+    route: '/group/add',
+  },
   {
     displayName: 'Časovi',
     iconName: 'calendar',

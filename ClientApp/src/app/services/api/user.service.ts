@@ -8,12 +8,15 @@ import { ApiService } from 'src/app/services/api.service';
   providedIn: 'root'
 })
 export class UserService implements BaseService {
-
+  url = 'user'
   constructor(private api: ApiService) { }
   getPagedData(request: PagedRequest<any>): Observable<any> {
-    return this.api.post('user/get-paged', request)
+    return this.api.post(`${this.url}/get-paged`, request)
   }
   addUser(user: any) {
-    return this.api.post('user/create', user)
+    return this.api.post(`${this.url}/create`, user)
+  }
+  getByRole(roleId: number) {
+    return this.api.get(`${this.url}/get-by-role/${roleId}`)
   }
 }

@@ -42,7 +42,8 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Unit>
             IsActive = true
         };
         user = _uow.users.AddUser(user);
-
+        //NOTE: save changes x2 because of key generation
+        await _uow.SaveChangesAsync(ct);
         if (request.RoleIds.Count > 0)
         {
             _uow.users.AddUserRoles(user.Id, request.RoleIds);

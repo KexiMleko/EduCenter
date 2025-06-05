@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using EduCenter.API.Features.Users.GetAllUsers;
 using EduCenter.API.Shared.Filters;
 using EduCenter.API.Features.Users.GetUsersPaged;
+using EduCenter.API.Features.Users.GetUsersByRole;
 
 namespace EduCenter.API.Features.Users;
 [Authorize]
@@ -54,5 +55,11 @@ public class UserController : BaseApiController
     {
         await _mediator.Send(request, ct);
         return Ok();
+    }
+    [HttpGet("get-by-role/{id}")]
+    public async Task<IActionResult> GetUsersByRole(int id, CancellationToken ct)
+    {
+        var users = await _mediator.Send(new GetUsersByRoleQuery(id), ct);
+        return Ok(users);
     }
 }

@@ -2,7 +2,7 @@ using EduCenter.API.Data.Models;
 using MediatR;
 
 namespace EduCenter.API.Features.Groups.CreateGroup;
-public sealed record CreateGroupCommand(int teacherId, int subjectId, int maxNumberOfClasses, int numberOfClassesLeft, Dictionary<int, int> studentPaymentPlans) : IRequest<Unit>;
+public sealed record CreateGroupCommand(string name, int teacherId, int subjectId, int maxNumberOfClasses, Dictionary<int, int>? studentPaymentPlans) : IRequest<Unit>;
 public class CreateGroupHandler : IRequestHandler<CreateGroupCommand, Unit>
 {
     IUnitOfWork _uow;
@@ -15,13 +15,14 @@ public class CreateGroupHandler : IRequestHandler<CreateGroupCommand, Unit>
     {
         var group = _uow.groups.AddGroup(new Group
         {
+            Name = request.name,
             TeacherId = request.teacherId,
             SubjectId = request.subjectId,
             MaxNumberOfClasses = request.maxNumberOfClasses,
-            NumberOfClassesLeft = request.numberOfClassesLeft,
+            NumberOfClassesLeft = request.maxNumberOfClasses,
             CreatedAt = DateTime.UtcNow
         });
-        if (request.studentPaymentPlans.Count > 0)
+        if (request.studentPaymentPlans != null)
         {
             List<Enrollment> enrollments = new List<Enrollment>();
             foreach (var plan in request.studentPaymentPlans)
@@ -34,7 +35,8 @@ public class CreateGroupHandler : IRequestHandler<CreateGroupCommand, Unit>
                     PaymentPlanId = plan.Value
                 });
             }
-            _uow.enrollments.AddEnrollments(enrollments);
+            if (enrollments.Count > 0)
+                _uow.enrollments.AddEnrollments(enrollments);
         }
         await _uow.SaveChangesAsync(cancellationToken);
         return Unit.Value;

@@ -4,6 +4,7 @@ namespace EduCenter.API.Data.Models;
 
 public class Group : BaseEntity
 {
+    public string Name { get; set; } = "";
     public int TeacherId { get; set; }
     public int SubjectId { get; set; }
     public bool IsActive { get; set; }

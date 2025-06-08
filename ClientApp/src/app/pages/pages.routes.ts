@@ -5,6 +5,7 @@ import { AddUserComponent } from './users/add-user/add-user.component';
 import { AddStudentComponent } from './students/add-student/add-student.component';
 import { StudentListComponent } from './students/student-list/student-list.component';
 import { AddGroupComponent } from './groups/add-group/add-group.component';
+import { GroupListComponent } from './groups/group-list/group-list.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -36,6 +37,10 @@ export const PagesRoutes: Routes = [
   {
     path: 'group/add',
     component: AddGroupComponent
+  },
+  {
+    path: 'groups',
+    component: GroupListComponent
   },
   {
     path: '**',

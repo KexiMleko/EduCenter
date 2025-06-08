@@ -30,7 +30,7 @@ public class StudentController : BaseApiController
     }
     [HttpPost("get-paged")]
     [ProducesResponseType(typeof(PagedResult<StudentViewModel>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetUsersPaged(PagedRequest<StudentFilter> request, CancellationToken ct)
+    public async Task<IActionResult> GetStudentsPaged(PagedRequest<StudentFilter> request, CancellationToken ct)
     {
         PagedResult<StudentViewModel> result = await _mediator.Send(new GetStudentsPagedQuery(request), ct);
         return Ok(result);

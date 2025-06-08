@@ -12,7 +12,7 @@ public class GroupViewModel
     public bool IsActive { get; set; }
     public int MaxNumberOfClasses { get; set; }
     public int NumberOfClassesLeft { get; set; }
-    public List<int> StudentIds { get; set; } = new List<int>();
+    public int StudentCount { get; set; }
     public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

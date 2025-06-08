@@ -4,6 +4,8 @@ using MediatR;
 using EduCenter.API.Features.Groups.CreateGroup;
 using EduCenter.API.Features.Groups.UpdateGroup;
 using EduCenter.API.Features.Groups.GetAllGroups;
+using EduCenter.API.Features.Groups.GetGroupsPaged;
+using EduCenter.API.Shared.Filters;
 namespace EduCenter.API.Features.Groups;
 public class GroupController : BaseApiController
 {
@@ -29,6 +31,12 @@ public class GroupController : BaseApiController
     {
         var request = new GetAllGroupsQuery();
         var result = await _mediator.Send(request, ct);
+        return Ok(result);
+    }
+    [HttpPost("get-paged")]
+    public async Task<IActionResult> GetGroupsPaged(PagedRequest<GroupFilter> request, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetGroupsPagedQuery(request), ct);
         return Ok(result);
     }
 }

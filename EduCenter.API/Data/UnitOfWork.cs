@@ -5,6 +5,7 @@ using EduCenter.API.Features.Enrollments;
 using EduCenter.API.Features.Groups;
 using EduCenter.API.Features.GroupSessions;
 using EduCenter.API.Features.LevelOfStudys;
+using EduCenter.API.Features.PaymentPlans;
 using EduCenter.API.Features.Roles;
 using EduCenter.API.Features.Students;
 using EduCenter.API.Features.Subjects;
@@ -27,10 +28,15 @@ public class UnitOfWork : IUnitOfWork
     IEnrollmentRepository _enrollments;
     IGroupSessionRepository _groupSessions;
     IAttendanceRepository _attendances;
+    IPaymentPlanRepository _paymentPlans;
     // NOTE: Getters
     public IUserRepository users
     {
         get => _users != null ? _users : new UserRepository(_appContext);
+    }
+    public IPaymentPlanRepository paymentPlans
+    {
+        get => _paymentPlans != null ? _paymentPlans : new PaymentPlanRepository(_appContext);
     }
     public IStudentRepository students
     {

@@ -16,4 +16,7 @@ export class GroupService implements BaseService {
   addgroup(group: any) {
     return this.api.post(`${this.url}/create`, group)
   }
+  getGroupDetails(id: number) {
+    return this.api.get(`${this.url}/details/${id}`);
+  }
 }

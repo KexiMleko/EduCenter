@@ -6,6 +6,7 @@ import { AddStudentComponent } from './students/add-student/add-student.componen
 import { StudentListComponent } from './students/student-list/student-list.component';
 import { AddGroupComponent } from './groups/add-group/add-group.component';
 import { GroupListComponent } from './groups/group-list/group-list.component';
+import { EnrollStudentsComponent } from './enrollments/enroll-students/enroll-students.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -41,6 +42,10 @@ export const PagesRoutes: Routes = [
   {
     path: 'groups',
     component: GroupListComponent
+  },
+  {
+    path: 'groups/:groupId/enrollments',
+    component: EnrollStudentsComponent
   },
   {
     path: '**',

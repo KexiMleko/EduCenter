@@ -3,6 +3,7 @@ using EduCenter.API.Features.Enrollments;
 using EduCenter.API.Features.Groups;
 using EduCenter.API.Features.GroupSessions;
 using EduCenter.API.Features.LevelOfStudys;
+using EduCenter.API.Features.PaymentPlans;
 using EduCenter.API.Features.Roles;
 using EduCenter.API.Features.Students;
 using EduCenter.API.Features.Subjects;
@@ -20,4 +21,5 @@ public interface IUnitOfWork
     IStudentRepository students { get; }
     IGroupSessionRepository groupSessions { get; }
     IAttendanceRepository attendances { get; }
+    IPaymentPlanRepository paymentPlans { get; }
 }

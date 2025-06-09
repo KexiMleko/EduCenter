@@ -1,4 +1,6 @@
-export interface Group {
+import { StudentBrief } from "./studentBrief";
+
+export interface GroupDetails {
   id: number;
   name: string;
   teacherId: number;
@@ -9,7 +11,8 @@ export interface Group {
   isActive: boolean;
   maxNumberOfClasses: number;
   numberOfClassesLeft: number;
+  students: StudentBrief[];
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date | null;
   studentCount: number;
 }

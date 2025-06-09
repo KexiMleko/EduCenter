@@ -8,12 +8,15 @@ import { ApiService } from 'src/app/services/api.service';
   providedIn: 'root'
 })
 export class StudentService implements BaseService {
-
+  url = 'student'
   constructor(private api: ApiService) { }
   getPagedData(request: PagedRequest<any>): Observable<any> {
     return this.api.post('student/get-paged', request)
   }
   addStudent(student: any) {
     return this.api.post('student/create', student)
+  }
+  getStudentByGroup(groupId: number) {
+    return this.api.get(`${this.url}/get-by-group/${groupId}`);
   }
 }

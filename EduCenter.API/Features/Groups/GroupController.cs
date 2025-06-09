@@ -6,6 +6,7 @@ using EduCenter.API.Features.Groups.UpdateGroup;
 using EduCenter.API.Features.Groups.GetAllGroups;
 using EduCenter.API.Features.Groups.GetGroupsPaged;
 using EduCenter.API.Shared.Filters;
+using EduCenter.API.Features.Groups.GetGroupById;
 namespace EduCenter.API.Features.Groups;
 public class GroupController : BaseApiController
 {
@@ -37,6 +38,12 @@ public class GroupController : BaseApiController
     public async Task<IActionResult> GetGroupsPaged(PagedRequest<GroupFilter> request, CancellationToken ct)
     {
         var result = await _mediator.Send(new GetGroupsPagedQuery(request), ct);
+        return Ok(result);
+    }
+    [HttpGet("details/{id}")]
+    public async Task<IActionResult> GetGroupDetailsById(int id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetGroupDetailsByIdQuery(id), ct);
         return Ok(result);
     }
 }

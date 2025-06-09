@@ -1,0 +1,159 @@
+.component-card {
+  margin: 16px;
+
+  .mat-mdc-card-content {
+    padding: 24px !important;
+  }
+}
+
+.group-data-container {
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  //  background-color: #fafafa;
+}
+
+.group-info {
+  .group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .group-name {
+      font-size: 18px;
+      font-weight: 500;
+      color: #1976d2;
+    }
+
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+
+      &.active {
+        background-color: #e8f5e8;
+        color: #2e7d32;
+        border: 1px solid #4caf50;
+      }
+
+      &.inactive {
+        background-color: #ffebee;
+        color: #c62828;
+        border: 1px solid #f44336;
+      }
+    }
+  }
+
+  .group-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 14px;
+
+    .detail-item {
+      white-space: nowrap;
+    }
+
+    .detail-separator {
+      color: #bbb;
+      font-weight: bold;
+    }
+  }
+}
+
+.student-container {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  min-height: 400px;
+}
+
+.student-list-container,
+.enrolled-students-container {
+  flex: 1;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  h4 {
+    margin: 0 0 16px 0;
+    color: #424242;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+}
+
+.enrollment-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.enroll-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #667eea;
+  color: #ffffff;
+  //background-color: #1976d2;
+}
+
+.enroll-btn:hover {
+  background-color: #506abf;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.enroll-btn i {
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .component-card {
+    margin: 8px;
+
+    .mat-mdc-card-content {
+      padding: 16px !important;
+    }
+  }
+
+  .student-container {
+    flex-direction: column;
+    gap: 16px;
+
+    .enrollment-controls {
+      flex-direction: row;
+      justify-content: center;
+      padding: 12px 0;
+    }
+  }
+
+  .group-info .group-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+
+    .detail-separator {
+      display: none;
+    }
+  }
+}

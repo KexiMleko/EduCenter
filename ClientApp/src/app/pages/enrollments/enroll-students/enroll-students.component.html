@@ -1,0 +1,51 @@
+<mat-card class="component-card">
+  <mat-card-header>
+    <mat-card-title>Upis studenata</mat-card-title>
+    <mat-card-subtitle>Upis studenata u ovu grupu</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="group-data-container">
+      <div class="group-info" *ngIf="groupData">
+        <div class="group-header">
+          <span class="group-name">{{ groupData.name }}</span>
+          <span [class]="groupData.isActive ? 'status-badge active' : 'status-badge inactive'">
+            {{ groupData.isActive ? 'Aktivna' : 'Neaktivna' }}
+          </span>
+        </div>
+        <div class="group-details">
+          <span class="detail-item">{{ groupData.teacherFirstName }} {{ groupData.teacherLastName }}</span>
+          <span class="detail-separator">•</span>
+          <span class="detail-item">{{ groupData.subjectName }}</span>
+          <span class="detail-separator">•</span>
+          <span class="detail-item">{{ groupData.maxNumberOfClasses }} časova ({{ groupData.numberOfClassesLeft }}
+            preostalo)</span>
+          <span class="detail-separator">•</span>
+          <span class="detail-item">{{ groupData.studentCount }} studenata</span>
+        </div>
+      </div>
+    </div>
+    <div class="student-container" cdkDropListGroup>
+      <div class="student-list-container">
+        <h4>Dostupni studenti</h4>
+        <div cdkDropList [cdkDropListData]="availableStudents" class="example-list" (cdkDropListDropped)="drop($event)">
+          @for (student of availableStudents; track student) {
+          <div class="example-box" cdkDrag>{{student.firstName}} {{student.lastName}}</div>
+          }
+        </div>
+      </div>
+      <div class="enrollment-controls">
+        <button mat-icon-button class="enroll-btn" title="Upiši ili Ispiši selektovanog studenta">
+          <i-tabler name="transfer"></i-tabler>
+        </button>
+      </div>
+      <div class="enrolled-students-container">
+        <h4>Upisani studenti</h4>
+        <div cdkDropList [cdkDropListData]="enrolledStudents" class="example-list" (cdkDropListDropped)="drop($event)">
+          @for (student of enrolledStudents; track student) {
+          <div class="example-box" cdkDrag>{{student.firstName}} {{student.lastName}}</div>
+          }
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

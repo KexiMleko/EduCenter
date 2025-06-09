@@ -18,6 +18,7 @@ public class CreateGroupHandler : IRequestHandler<CreateGroupCommand, Unit>
             Name = request.name,
             TeacherId = request.teacherId,
             SubjectId = request.subjectId,
+            IsActive = true,
             MaxNumberOfClasses = request.maxNumberOfClasses,
             NumberOfClassesLeft = request.maxNumberOfClasses,
             CreatedAt = DateTime.UtcNow

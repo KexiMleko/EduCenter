@@ -10,6 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 import { BaseTableComponent } from 'src/app/base/base-table-component';
 import { Group } from 'src/app/models/group';
 import { GroupService } from 'src/app/services/api/group.service';
@@ -35,7 +36,7 @@ import { GroupService } from 'src/app/services/api/group.service';
 export class GroupListComponent extends BaseTableComponent {
 
   displayedColumns: string[] = ['name', 'teacherFullName', 'subjectName', 'MaxNumberOfClasses', 'MaxNumberOfClassesLeft', 'groupCount', 'createdAt', 'actions'];
-  constructor(private groupService: GroupService) {
+  constructor(private router: Router, private groupService: GroupService) {
     super(groupService);
   }
   ngOnInit(): void {
@@ -44,5 +45,10 @@ export class GroupListComponent extends BaseTableComponent {
   getGroupFilter() {
     return {}
   }
-  onMenuAction(action: string, group: Group): void { }
+  onMenuAction(action: string, group: Group): void {
+    console.log(group.id);
+    if (action == "enroll") {
+      this.router.navigate(['/groups', group.id, 'enrollments'])
+    }
+  }
 }

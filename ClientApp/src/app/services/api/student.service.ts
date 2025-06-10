@@ -19,4 +19,8 @@ export class StudentService implements BaseService {
   getStudentByGroup(groupId: number) {
     return this.api.get(`${this.url}/get-by-group/${groupId}`);
   }
+
+  getBriefPagedData(request: PagedRequest<any>): Observable<any> {
+    return this.api.post('student/get-brief-paged', request)
+  }
 }

@@ -2,8 +2,10 @@ using EduCenter.API.Base;
 using EduCenter.API.Features.Students.CreateStudent;
 using EduCenter.API.Features.Students.DTOs;
 using EduCenter.API.Features.Students.GetAllStudents;
+using EduCenter.API.Features.Students.GetStudentsBriefPaged;
 using EduCenter.API.Features.Students.GetStudentsPaged;
 using EduCenter.API.Features.Students.UpdateStudent;
+using EduCenter.API.Features.Users.GetStudentByGroup;
 using EduCenter.API.Shared.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -43,4 +45,18 @@ public class StudentController : BaseApiController
         return Ok(result);
     }
 
+    [HttpGet("get-by-group/{id}")]
+    public async Task<IActionResult> GetStudentsByGroup(int id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetStudentByGroupQuery(id), ct);
+        return Ok(result);
+    }
+
+    [HttpPost("get-brief-paged")]
+    [ProducesResponseType(typeof(PagedResult<StudentBriefViewModel>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetStudentsBriefPaged(PagedRequest<StudentFilter> request, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetStudentsBriefPagedQuery(request), ct);
+        return Ok(result);
+    }
 }

@@ -17,8 +17,9 @@ public class GetGroupsPagedHandler : IRequestHandler<GetGroupsPagedQuery, PagedR
     public async Task<PagedResult<GroupViewModel>> Handle(GetGroupsPagedQuery query, CancellationToken ct)
     {
         var filters = query.request.Filters;
-
-        var cte = @"
+        var parameters = new DynamicParameters();
+        var filterSql = LoadFilters(parameters, filters);
+        var cte = @$"
 WITH student_counts AS (
     SELECT group_id, COUNT(*) AS number_of_students
     FROM enrollments
@@ -44,11 +45,7 @@ paged AS MATERIALIZED (
     JOIN users t ON g.teacher_id = t.id
     JOIN subjects s ON g.subject_id = s.id
     LEFT JOIN student_counts sc ON sc.group_id = g.id
-                WHERE 1=1";
-        var parameters = new DynamicParameters();
-        if (filters != null)
-            ApplyFilters(cte, parameters, filters);
-        cte += @" )";
+                WHERE 1=1 {filterSql} )";
         var finalQuery = $" {cte} SELECT * FROM paged LIMIT @Limit OFFSET @Offset;{cte} SELECT COUNT(*) FROM paged";
 
         parameters.Add("Offset", query.request.StartIndex);
@@ -72,23 +69,31 @@ paged AS MATERIALIZED (
             Items = groups.ToList(),
         };
     }
-    void ApplyFilters(string sql, DynamicParameters parameters, GroupFilter filters)
+    string LoadFilters(DynamicParameters parameters, GroupFilter? filters)
     {
+        string sql = "";
+        if (filters == null) return sql;
+        if (filters.IsActive != null)
+        {
+            sql = " AND g.is_active=@IsActive";
+            parameters.Add("IsActive", filters.IsActive);
+        }
         if (filters.Name != null)
         {
-            sql += " AND name = @Name";
+            sql += " AND g.name = @Name";
             parameters.Add("Name", $"{filters.Name}");
         }
         if (filters.TeacherId != null)
         {
-            sql += " AND teacher_id = @TeacherId";
+            sql += " AND g.teacher_id = @TeacherId";
             parameters.Add("TeacherId", filters.TeacherId);
         }
         if (filters.MaxNumberOfClassesRange != null)
         {
-            sql += " AND max_number_of_classes > @NocMin AND max_number_of_classes < @NocMax";
+            sql += " AND g.max_number_of_classes > @NocMin AND g.max_number_of_classes < @NocMax";
             parameters.Add("NocMax", filters.MaxNumberOfClassesRange.Max);
             parameters.Add("NocMin", filters.MaxNumberOfClassesRange.Min);
         }
+        return sql;
     }
 }

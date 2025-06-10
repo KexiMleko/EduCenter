@@ -31,6 +31,8 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/auth.interceptor';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getSerbianPaginatorIntl } from './configs/serbianPaginatorIntl';
 
 export const appConfig: ApplicationConfig = {
   providers: [{
@@ -56,6 +58,10 @@ export const appConfig: ApplicationConfig = {
     TablerIconsModule.pick(TablerIcons),
     NgScrollbarModule,
   ),
+  {
+    provide: MatPaginatorIntl,
+    useFactory: getSerbianPaginatorIntl
+  },
   provideHotToastConfig(),
   ],
 };

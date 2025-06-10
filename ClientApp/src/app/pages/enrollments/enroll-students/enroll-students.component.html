@@ -24,14 +24,76 @@
         </div>
       </div>
     </div>
+      <form [formGroup]="filterForm" #form="ngForm" (ngSubmit)="search()" class="filter-form">
+
+        <mat-form-field>
+          <mat-label>Ime</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Prezime</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Nivo studija</mat-label>
+          <mat-select formControlName="levelId" >
+            @for (level of levels; track level) {
+              <mat-option [value]="level.id">{{level.title}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Godina studija</mat-label>
+          <input type="number" matInput formControlName="academicYear" />
+        </mat-form-field>
+         <button type="submit" mat-button color="primary" class="filter-search">
+            <i-tabler name="search"></i-tabler>
+          </button>
+      </form>
     <div class="student-container" cdkDropListGroup>
       <div class="student-list-container">
         <h4>Dostupni studenti</h4>
-        <div cdkDropList [cdkDropListData]="availableStudents" class="example-list" (cdkDropListDropped)="drop($event)">
-          @for (student of availableStudents; track student) {
-          <div class="example-box" cdkDrag>{{student.firstName}} {{student.lastName}}</div>
-          }
+
+<div class="table-header" *ngIf="availableStudents.length > 0">
+    <div class="header-cell name-cell">Ime i prezime</div>
+    <div class="header-cell level-cell">Nivo studija</div>
+    <div class="header-cell year-cell">Godina</div>
+    <div class="header-cell action-cell">Akcije</div>
+  </div>
+
+  <div cdkDropList [cdkDropListData]="availableStudents" class="drop-box" (cdkDropListDropped)="drop($event)">
+          <ng-container *ngIf="availableStudents.length>0">
+
+    @for (student of availableStudents; track student.id) {
+      <div class="student-row" cdkDrag [cdkDragData]="student">
+        <div class="row-cell name-cell">
+          <strong>{{student.firstName}} {{student.lastName}}</strong>
         </div>
+        <div class="row-cell level-cell">
+          <mat-chip>{{student.levelOfStudyTitle}}</mat-chip>
+        </div>
+        <div class="row-cell year-cell">
+          <mat-chip>{{student.academicYear}}</mat-chip>
+        </div>
+        <div class="row-cell action-cell">
+          <button mat-icon-button (click)="quickEnroll(student)" class="action-btn">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    }
+          <mat-paginator
+    [length]="this.totalCount"
+    [pageSize]="this.limit"
+    [pageSizeOptions]="[5, 10, 15]"
+   (page)=onPageChange($event,this.createFilters())
+    showFirstLastButtons>
+  </mat-paginator>
+          </ng-container>
+  </div>
       </div>
       <div class="enrollment-controls">
         <button mat-icon-button class="enroll-btn" title="Upiši ili Ispiši selektovanog studenta">
@@ -40,10 +102,36 @@
       </div>
       <div class="enrolled-students-container">
         <h4>Upisani studenti</h4>
-        <div cdkDropList [cdkDropListData]="enrolledStudents" class="example-list" (cdkDropListDropped)="drop($event)">
-          @for (student of enrolledStudents; track student) {
-          <div class="example-box" cdkDrag>{{student.firstName}} {{student.lastName}}</div>
-          }
+<div class="table-header" *ngIf="enrolledStudents.length > 0">
+    <div class="header-cell name-cell">Ime i prezime</div>
+    <div class="header-cell level-cell">Nivo studija</div>
+    <div class="header-cell year-cell">Godina</div>
+    <div class="header-cell action-cell">Akcije</div>
+  </div>
+
+  <div cdkDropList [cdkDropListData]="enrolledStudents" class="drop-box" (cdkDropListDropped)="drop($event)">
+          <ng-container *ngIf="enrolledStudents.length>0">
+
+    @for (student of enrolledStudents; track student.id) {
+      <div class="student-row" cdkDrag [cdkDragData]="student">
+        <div class="row-cell name-cell">
+          <strong>{{student.firstName}} {{student.lastName}}</strong>
+        </div>
+        <div class="row-cell level-cell">
+          <mat-chip>{{student.levelOfStudyTitle}}</mat-chip>
+        </div>
+        <div class="row-cell year-cell">
+          <mat-chip>{{student.academicYear}}</mat-chip>
+        </div>
+        <div class="row-cell action-cell">
+          <button mat-icon-button (click)="quickEnroll(student)" class="action-btn">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    }
+            </ng-container>
         </div>
       </div>
     </div>

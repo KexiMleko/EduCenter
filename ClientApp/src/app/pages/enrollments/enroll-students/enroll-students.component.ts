@@ -8,7 +8,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,6 +21,12 @@ import { GroupDetails } from 'src/app/models/GroupDetails';
 import { GroupService } from 'src/app/services/api/group.service';
 import { StudentBrief } from 'src/app/models/studentBrief';
 import { StudentService } from 'src/app/services/api/student.service';
+import { LevelOfStudy } from 'src/app/models/level-of-study';
+import { LevelsOfStudyService } from 'src/app/services/levels-of-study.service';
+import { PageEvent } from '@angular/material/paginator';
+import { PagedRequest } from 'src/app/models/wrappers/PagedRequest';
+import { PagedResult } from 'src/app/models/wrappers/PagedResult';
+import { StudentFilter } from 'src/app/models/filters/studentFilter';
 
 @Component({
   selector: 'app-enroll-students',
@@ -36,7 +42,7 @@ import { StudentService } from 'src/app/services/api/student.service';
     MaterialModule,
     CdkDropListGroup,
     CdkDropList,
-    CdkDrag
+    CdkDrag,
   ],
   templateUrl: './enroll-students.component.html',
   styleUrl: './enroll-students.component.scss'
@@ -44,15 +50,44 @@ import { StudentService } from 'src/app/services/api/student.service';
 export class EnrollStudentsComponent implements OnInit {
   groupId: number;
   groupData: GroupDetails
+  levels: LevelOfStudy[] = []
   enrolledStudents: StudentBrief[] = [];
   availableStudents: StudentBrief[] = []
-  constructor(private studentService: StudentService, private groupService: GroupService, private route: ActivatedRoute) {
+  filterForm: FormGroup
 
+  totalCount: number = 0;
+  startIndex: number = 0
+  limit: number = 5
+
+  constructor(private fb: FormBuilder,
+    private levelOfStudyService: LevelsOfStudyService, private studentService: StudentService, private groupService: GroupService, private route: ActivatedRoute) {
+    this.filterForm = this.fb.group({
+      academicYear: [null],
+      levelId: [null],
+      firstName: [''],
+      lastName: [''],
+    });
   }
   ngOnInit(): void {
+    this.loadLevels();
     const idParam = this.route.snapshot.paramMap.get('groupId');
     this.groupId = idParam ? parseInt(idParam, 10) : 0;
     this.loadGroupData();
+    this.loadAvailableStudents(this.createFilters())
+  }
+  createFilters(): StudentFilter {
+    const filterData = this.filterForm.getRawValue();
+    return {
+      levelOfStudyId: filterData.levelId,
+      academicYear: filterData.academicYear,
+      firstName: filterData.firstName || null,
+      lastName: filterData.lastName || null,
+    };
+  }
+  async loadLevels() {
+    this.levelOfStudyService.getAll().subscribe({
+      next: (levels: any) => this.levels = levels
+    });
   }
   loadGroupData() {
     this.groupService.getGroupDetails(this.groupId).subscribe(
@@ -66,17 +101,24 @@ export class EnrollStudentsComponent implements OnInit {
       }
     )
   }
-  loadAvailableStudents() {
-    this.studentService.getStudentByGroup(this.groupId).subscribe(
+  createPagedRequest(filter: StudentFilter): PagedRequest<any> {
+    return {
+      startIndex: this.startIndex,
+      limit: this.limit,
+      filters: filter
+    };
+  }
+  loadAvailableStudents(filter: StudentFilter) {
+    this.studentService.getBriefPagedData(this.createPagedRequest(filter)).subscribe(
       {
-        next: (data: any) => {
-          this.availableStudents = data;
+        next: (data: PagedResult<StudentBrief>) => {
+          console.log(data);
+          this.totalCount = data.totalCount
+          this.availableStudents = data.items;
         }
       }
     );
   }
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-
 
   drop(event: CdkDragDrop<StudentBrief[]>) {
     if (event.previousContainer === event.container) {
@@ -89,5 +131,17 @@ export class EnrollStudentsComponent implements OnInit {
         event.currentIndex,
       );
     }
+  }
+  quickEnroll(student: StudentBrief) {
+
+  }
+  search() {
+    this.loadAvailableStudents(this.createFilters())
+  }
+  onPageChange(event: PageEvent, filter: StudentFilter) {
+    this.limit = event.pageSize;
+    this.startIndex = event.pageIndex;
+
+    this.loadAvailableStudents(filter);
   }
 }

@@ -3,7 +3,36 @@
     <mat-card-title>Lista studenata</mat-card-title>
     <mat-card-subtitle>Pregled svih studenata</mat-card-subtitle>
   </mat-card-header>
+  <div class="filter-form-container">
+    <form [formGroup]="this.filterForm" #form="ngForm" (ngSubmit)="search()" class="filter-form">
 
+      <mat-form-field>
+        <mat-label>Ime</mat-label>
+        <input matInput formControlName="firstName" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Prezime</mat-label>
+        <input matInput formControlName="lastName" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nivo studija</mat-label>
+        <mat-select formControlName="levelId" >
+          @for (level of levels; track level) {
+            <mat-option [value]="level.id">{{level.title}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Godina studija</mat-label>
+        <input type="number" matInput formControlName="academicYear" />
+      </mat-form-field>
+      <button type="submit" mat-button color="primary" class="filter-search">
+        <i-tabler name="search"></i-tabler>
+      </button>
+    </form>
+  </div>
   <mat-card-content>
     <p *ngIf="!(this.dataSource.data.length>0)">
       Nema podatak prema ovim kriterijumima
@@ -100,7 +129,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="data-row"></tr>
       </table>
       <mat-paginator [length]="this.totalCount" [pageSize]="this.limit" [pageSizeOptions]="[5, 10, 25, 100]"
-        (page)=onPageChange($event,this.getStudentFilter()); aria-label="Select page">
+        (page)=onPageChange($event,this.createFilters()); aria-label="Select page">
       </mat-paginator>
     </div>
   </mat-card-content>

@@ -2,7 +2,6 @@
 
 <!--toc:start-->
 - [Project Overview](#project-overview)
-  - [Purpose](#purpose)
   - [Target Users / Use Case](#target-users-use-case)
   - [Priorities](#priorities)
   - [Main Design Goals](#main-design-goals)
@@ -10,14 +9,9 @@
   - [Summary of Major Decisions](#summary-of-major-decisions)
 <!--toc:end-->
 
-## Purpose
-
->This application is an internal administrative tool designed to streamline operations in specialized educational institutions.
-It supports essential tasks such as finance tracking, student performance monitoring, and overall workflow management.
-
 ## Target Users / Use Case
 
-The primary users are administrative staff and educators at private schools or exam-focused institutions.
+The primary users are administrative staff and educators at private schools or similar educational institutions.
 They will use the platform to manage financial records, track student progress, and coordinate day-to-day activities more efficiently.
 
 ## Priorities

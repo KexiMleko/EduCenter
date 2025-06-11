@@ -3,7 +3,7 @@
 ## Project Overview
 
 **EduCenter** is a modular platform built to support educational institutions 
-in managing core activities such as student preparation, scheduling, and performance tracking and other core activities.
+in managing core activities such as student preparation, scheduling, finance and performance tracking and other core activities.
 
 ---
 

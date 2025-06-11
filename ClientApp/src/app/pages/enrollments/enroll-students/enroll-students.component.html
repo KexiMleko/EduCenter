@@ -69,7 +69,7 @@
     @for (student of availableStudents; track student.id) {
       <div class="student-row" cdkDrag [cdkDragData]="student">
         <div class="row-cell name-cell">
-          <strong>{{student.firstName}} {{student.lastName}}</strong>
+          <span>{{student.firstName}} {{student.lastName}}</span>
         </div>
         <div class="row-cell level-cell">
           <mat-chip>{{student.levelOfStudyTitle}}</mat-chip>
@@ -96,7 +96,7 @@
   </div>
       </div>
       <div class="enrollment-controls">
-        <button mat-icon-button class="enroll-btn" title="Upiši ili Ispiši selektovanog studenta">
+        <button mat-icon-button class="enroll-btn" (click)="submit()" title="Potvrdi Upis/Ispis selektovanih studenata">
           <i-tabler name="transfer"></i-tabler>
         </button>
       </div>
@@ -115,7 +115,7 @@
     @for (student of enrolledStudents; track student.id) {
       <div class="student-row" cdkDrag [cdkDragData]="student">
         <div class="row-cell name-cell">
-          <strong>{{student.firstName}} {{student.lastName}}</strong>
+          <span>{{student.firstName}} {{student.lastName}}</span>
         </div>
         <div class="row-cell level-cell">
           <mat-chip>{{student.levelOfStudyTitle}}</mat-chip>

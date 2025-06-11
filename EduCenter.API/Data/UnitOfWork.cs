@@ -14,7 +14,7 @@ using EduCenter.API.Features.Users;
 namespace EduCenter.API.Data;
 public class UnitOfWork : IUnitOfWork
 {
-    DatabaseContext _appContext;
+    private readonly DatabaseContext _appContext;
     public UnitOfWork(DatabaseContext appContext)
     {
         _appContext = appContext;
@@ -41,9 +41,23 @@ public class UnitOfWork : IUnitOfWork
     public IEnrollmentRepository enrollments => _enrollments ??= new EnrollmentRepository(_appContext);
     public IAttendanceRepository attendances => _attendances ??= new AttendanceRepository(_appContext);
 
-    // NOTE: Save changes
+    // NOTE: Save changes and transaction managment
     public async Task SaveChangesAsync(CancellationToken ct)
     {
         await _appContext.SaveChangesAsync(ct);
+    }
+    public async Task BeginTransactionAsync(CancellationToken ct = default)
+    {
+        await _appContext.Database.BeginTransactionAsync(ct);
+    }
+
+    public async Task CommitTransactionAsync(CancellationToken ct = default)
+    {
+        await _appContext.Database.CommitTransactionAsync(ct);
+    }
+
+    public async Task RollbackTransactionAsync(CancellationToken ct = default)
+    {
+        await _appContext.Database.RollbackTransactionAsync(ct);
     }
 }

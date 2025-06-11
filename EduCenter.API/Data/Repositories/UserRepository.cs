@@ -11,10 +11,9 @@ public class UserRepository : IUserRepository
     {
         _appContext = appContext;
     }
-    public User AddUser(User user)
+    public void AddUser(User user)
     {
         _appContext.Users.Add(user);
-        return user;
     }
     public async Task<User> GetUserByUsername(string username, CancellationToken ct)
     {
@@ -44,7 +43,8 @@ public class UserRepository : IUserRepository
             roles.Add(new UserRole
             {
                 UserId = userId,
-                RoleId = roleId
+                RoleId = roleId,
+                CreatedAt = DateTime.UtcNow
             });
         }
         _appContext.UserRoles.AddRange(roles);

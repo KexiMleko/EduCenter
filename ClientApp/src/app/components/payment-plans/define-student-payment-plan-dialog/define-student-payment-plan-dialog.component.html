@@ -1,0 +1,33 @@
+<div class="payment-dialog-container">
+  <!-- Header with close button -->
+  <div class="dialog-header">
+    <h2 mat-dialog-title class="dialog-title">
+      Plan plaćanja za studenta
+    </h2>
+    <button mat-icon-button class="close-button" [mat-dialog-close]="true" aria-label="Zatvori" matTooltip="Zatvori">
+      <i-tabler name="x" class="close-icon"></i-tabler>
+    </button>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <!-- Student Information - Simple & Minimalistic -->
+    <div class="student-info">
+      <div class="student-name">{{ studentData.firstName }} {{ studentData.lastName }}</div>
+      <div class="student-details">
+        <span class="study-level">{{ studentData.levelOfStudyTitle }}</span>
+        <span class="separator">•</span>
+        <span class="academic-year">{{ studentData.academicYear }}</span>
+      </div>
+    </div>
+
+    <!-- Payment Plan Form Section -->
+    <div class="form-section">
+      <div class="form-header">
+        <i-tabler name="credit-card" class="form-icon"></i-tabler>
+        <span>Detalji plana plaćanja</span>
+      </div>
+
+      <app-payment-plan-form (paymentPlanData)="this.onFormSubmited($event)"></app-payment-plan-form>
+    </div>
+  </mat-dialog-content>
+</div>

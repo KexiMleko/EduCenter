@@ -11,9 +11,15 @@ public class EnrollmentController : BaseApiController
         _mediator = mediator;
     }
     [HttpPost("enroll-student")]
-    public IActionResult EnrollStudent(EnrollStudentCommand request)
+    public async Task<IActionResult> EnrollStudent(EnrollStudentCommand request)
     {
-        _mediator.Send(request);
+        await _mediator.Send(request);
+        return Ok();
+    }
+    [HttpPost("multiple-with-plan")]
+    public async Task<IActionResult> EnrollMultipleStudentWithPlans(List<StudentEnrollmentDto> students, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new EnrollStudentsWithPaymentPlansCommand(students), cancellationToken);
         return Ok();
     }
 }

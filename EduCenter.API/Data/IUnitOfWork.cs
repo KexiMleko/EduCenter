@@ -11,7 +11,11 @@ using EduCenter.API.Features.Users;
 
 public interface IUnitOfWork
 {
+    Task BeginTransactionAsync(CancellationToken ct = default);
+    Task CommitTransactionAsync(CancellationToken ct = default);
+    Task RollbackTransactionAsync(CancellationToken ct = default);
     Task SaveChangesAsync(CancellationToken ct);
+
     IUserRepository users { get; }
     IRoleRepository roles { get; }
     ISubjectRepository subjects { get; }

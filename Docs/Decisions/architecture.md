@@ -18,8 +18,8 @@ This approach keeps all application logic within a single deployable unit while 
 - **Frontend:** SPA client built with Angular responsible for user interface and interactions.
 - **Backend:** API service managing business logic, data persistence, and security.
 - **Database:** Relational database for structured data storage.
-- **Deployment:** Self-hosted on a Proxmox VE server using a bare-metal virtualized environment.
-   The application runs on a dedicated VM with a static IP, reverse proxy, and HTTPS configured. Containerization and CI/CD are planned for future iterations.
+- **Deployment:** Will be self-hosted on a Proxmox VE server using a bare-metal virtualized environment.
+   The application will run on a dedicated VM with a static IP, reverse proxy, and HTTPS configured. Containerization and CI/CD are planned for future iterations.
 
 ## 4. Communication and Integration
 

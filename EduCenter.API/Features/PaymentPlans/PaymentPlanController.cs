@@ -18,6 +18,12 @@ public class PaymentPlanController : BaseApiController
         await _mediator.Send(request, ct);
         return Ok();
     }
+    [HttpPost("create-multiple")]
+    public async Task<IActionResult> CreatePaymentPlans(CreatePaymentPlanCommand request, CancellationToken ct)
+    {
+        await _mediator.Send(request, ct);
+        return Ok();
+    }
     // [HttpPost("update")]
     // public async Task<IActionResult> UpdatePaymentPlan(UpdatePaymentPlanCommand request, CancellationToken ct)
     // {

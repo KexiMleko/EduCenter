@@ -7,7 +7,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -27,6 +27,13 @@ import { PageEvent } from '@angular/material/paginator';
 import { PagedRequest } from 'src/app/models/wrappers/PagedRequest';
 import { PagedResult } from 'src/app/models/wrappers/PagedResult';
 import { StudentFilter } from 'src/app/models/filters/studentFilter';
+import { MatDialog } from '@angular/material/dialog';
+import { DefineStudentPaymentPlanDialogComponent } from 'src/app/components/payment-plans/define-student-payment-plan-dialog/define-student-payment-plan-dialog.component';
+import { PaymentPlan } from 'src/app/models/payment-plan';
+import { StudentEnrollment } from 'src/app/models/student-enrollment';
+import { EnrollmentService } from 'src/app/services/api/enrollment.service';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-enroll-students',
@@ -49,17 +56,19 @@ import { StudentFilter } from 'src/app/models/filters/studentFilter';
 })
 export class EnrollStudentsComponent implements OnInit {
   groupId: number;
+  toast = inject(HotToastService);
   groupData: GroupDetails
   levels: LevelOfStudy[] = []
   enrolledStudents: StudentBrief[] = [];
   availableStudents: StudentBrief[] = []
   filterForm: FormGroup
+  newEnrollments: StudentEnrollment[] = []
 
   totalCount: number = 0;
   startIndex: number = 0
   limit: number = 5
-
-  constructor(private fb: FormBuilder,
+  dialog = inject(MatDialog);
+  constructor(private fb: FormBuilder, private enrollmentService: EnrollmentService,
     private levelOfStudyService: LevelsOfStudyService, private studentService: StudentService, private groupService: GroupService, private route: ActivatedRoute) {
     this.filterForm = this.fb.group({
       academicYear: [null],
@@ -74,6 +83,21 @@ export class EnrollStudentsComponent implements OnInit {
     this.groupId = idParam ? parseInt(idParam, 10) : 0;
     this.loadGroupData();
     this.loadAvailableStudents(this.createFilters())
+  }
+
+  openDialog(student: StudentBrief) {
+    let data = {
+      student: student,
+      groupId: this.groupId
+    }
+    const dialogRef = this.dialog.open(DefineStudentPaymentPlanDialogComponent, {
+      data: data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.newEnrollments.push(result)
+      }
+    });
   }
   createFilters(): StudentFilter {
     const filterData = this.filterForm.getRawValue();
@@ -108,22 +132,42 @@ export class EnrollStudentsComponent implements OnInit {
       filters: filter
     };
   }
+  submit() {
+    console.log(this.newEnrollments)
+    this.enrollmentService.enrollMultiple(this.newEnrollments).pipe(
+      this.toast.observe({
+        loading: 'Upisivanje studenata...',
+        success: () => 'Uspesan upis',
+        error: () => 'Greska prilikom upisa'
+      }),
+    ).subscribe({
+      error: (err: any) => console.error(err)
+    })
+  }
   loadAvailableStudents(filter: StudentFilter) {
     this.studentService.getBriefPagedData(this.createPagedRequest(filter)).subscribe(
       {
         next: (data: PagedResult<StudentBrief>) => {
-          console.log(data);
           this.totalCount = data.totalCount
-          this.availableStudents = data.items;
+          this.availableStudents = data.items.filter(s => !(this.enrolledStudents.some(x => x.id == s.id)));
         }
       }
     );
   }
 
   drop(event: CdkDragDrop<StudentBrief[]>) {
+    let curr = event.container.id;
+    let prev = event.previousContainer.id;
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      let student = event.item.data;
+      if (curr == "cdk-drop-list-1") {
+        this.openDialog(student)
+      }
+      else {
+        this.newEnrollments = this.newEnrollments.filter(e => e.studentId != student.id)
+      }
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,

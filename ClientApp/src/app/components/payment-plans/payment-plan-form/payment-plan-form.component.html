@@ -1,0 +1,23 @@
+<div class="form-container">
+  <form [formGroup]="this.planForm" #form="ngForm" (ngSubmit)="onSubmit()" class="form">
+
+    <mat-form-field>
+      <mat-label>Ukupna suma</mat-label>
+      <input type="number" matInput formControlName="totalAmount" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Broj placanja / rata</mat-label>
+      <input matInput formControlName="numberOfPayments" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Napomena</mat-label>
+      <textarea matInput formControlName="note"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="planForm.invalid">
+      Potvrdi
+    </button>
+  </form>
+</div>

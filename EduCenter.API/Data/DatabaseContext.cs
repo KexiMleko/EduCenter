@@ -4,6 +4,20 @@ using Microsoft.EntityFrameworkCore;
 namespace EduCenter.API.Data;
 public class DatabaseContext : DbContext
 {
+    // private bool _disposed = false;
+    // public override async ValueTask DisposeAsync()
+    // {
+    //     Console.WriteLine("DatabaseContext.DisposeAsync called");
+    //     Console.WriteLine(Environment.StackTrace);
+    //     await base.DisposeAsync();
+    // }
+    // public override void Dispose()
+    // {
+    //     Console.WriteLine("DatabaseContext.Dispose called");
+    //     Console.WriteLine(Environment.StackTrace); // Shows who disposed it
+    //
+    //     base.Dispose();
+    // }
     public DatabaseContext(DbContextOptions options) : base(options)
     { }
 
@@ -156,7 +170,7 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<Enrollment>(entity =>
         {
             entity.HasOne<Group>().WithMany().HasForeignKey(e => e.GroupId).OnDelete(DeleteBehavior.NoAction);
-            entity.HasOne<PaymentPlan>().WithMany().HasForeignKey(e => e.PaymentPlanId).OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(e => e.PaymentPlan).WithMany().HasForeignKey(e => e.PaymentPlanId).OnDelete(DeleteBehavior.NoAction);
         });
     }
     public void ConfigurePayment(ModelBuilder modelBuilder)

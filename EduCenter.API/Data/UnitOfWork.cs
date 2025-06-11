@@ -30,44 +30,16 @@ public class UnitOfWork : IUnitOfWork
     IAttendanceRepository _attendances;
     IPaymentPlanRepository _paymentPlans;
     // NOTE: Getters
-    public IUserRepository users
-    {
-        get => _users != null ? _users : new UserRepository(_appContext);
-    }
-    public IPaymentPlanRepository paymentPlans
-    {
-        get => _paymentPlans != null ? _paymentPlans : new PaymentPlanRepository(_appContext);
-    }
-    public IStudentRepository students
-    {
-        get => _students != null ? _students : new StudentRepository(_appContext);
-    }
-    public IRoleRepository roles
-    {
-        get => _roles != null ? _roles : new RoleRepository(_appContext);
-    }
-    public IGroupRepository groups
-    {
-        get => _groups != null ? _groups : new GroupRepository(_appContext);
-    }
-    public IGroupSessionRepository groupSessions
-    {
-        get => _groupSessions != null ? _groupSessions : new GroupSessionRepository(_appContext);
-    }
-    public ISubjectRepository subjects
-    {
-        get => _subjects != null ? _subjects : new SubjectRepository(_appContext);
-    }
-    public ILevelOfStudyRepository levelsOfStudy
-    {
-        get => _levelsOfStudy != null ? _levelsOfStudy : new LevelOfStudyRepository(_appContext);
-    }
-
-    public IEnrollmentRepository enrollments
-    {
-        get => _enrollments != null ? _enrollments : new EnrollmentRepository(_appContext);
-    }
-    public IAttendanceRepository attendances { get => _attendances != null ? _attendances : new AttendanceRepository(_appContext); }
+    public IUserRepository users => _users ??= new UserRepository(_appContext);
+    public IPaymentPlanRepository paymentPlans => _paymentPlans ??= new PaymentPlanRepository(_appContext);
+    public IStudentRepository students => _students ??= new StudentRepository(_appContext);
+    public IRoleRepository roles => _roles ??= new RoleRepository(_appContext);
+    public IGroupRepository groups => _groups ??= new GroupRepository(_appContext);
+    public IGroupSessionRepository groupSessions => _groupSessions ??= new GroupSessionRepository(_appContext);
+    public ISubjectRepository subjects => _subjects ??= new SubjectRepository(_appContext);
+    public ILevelOfStudyRepository levelsOfStudy => _levelsOfStudy ??= new LevelOfStudyRepository(_appContext);
+    public IEnrollmentRepository enrollments => _enrollments ??= new EnrollmentRepository(_appContext);
+    public IAttendanceRepository attendances => _attendances ??= new AttendanceRepository(_appContext);
 
     // NOTE: Save changes
     public async Task SaveChangesAsync(CancellationToken ct)

@@ -14,6 +14,7 @@ public class IndividualSession : BaseEntity
     public int SubjectId { get; set; }
     public int ClassroomId { get; set; }
     public int PaymentPlanId { get; set; }
+    public DateTime TimeScheduled { get; set; }
     public SessionStatus Status { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }

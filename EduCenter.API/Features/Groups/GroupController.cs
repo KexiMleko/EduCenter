@@ -7,6 +7,7 @@ using EduCenter.API.Features.Groups.GetAllGroups;
 using EduCenter.API.Features.Groups.GetGroupsPaged;
 using EduCenter.API.Shared.Filters;
 using EduCenter.API.Features.Groups.GetGroupById;
+using EduCenter.API.Features.Groups.GetAllGroupsBrief;
 namespace EduCenter.API.Features.Groups;
 public class GroupController : BaseApiController
 {
@@ -31,6 +32,13 @@ public class GroupController : BaseApiController
     public async Task<IActionResult> GetAllGroups(CancellationToken ct)
     {
         var request = new GetAllGroupsQuery();
+        var result = await _mediator.Send(request, ct);
+        return Ok(result);
+    }
+    [HttpGet("get-all-brief")]
+    public async Task<IActionResult> GetAllGroupsBrief(CancellationToken ct)
+    {
+        var request = new GetAllGroupsBriefQuery();
         var result = await _mediator.Send(request, ct);
         return Ok(result);
     }

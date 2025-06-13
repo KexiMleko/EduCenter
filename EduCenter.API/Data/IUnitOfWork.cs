@@ -1,7 +1,9 @@
 using EduCenter.API.Features.Attendances;
+using EduCenter.API.Features.Classrooms;
 using EduCenter.API.Features.Enrollments;
 using EduCenter.API.Features.Groups;
 using EduCenter.API.Features.GroupSessions;
+using EduCenter.API.Features.IndividualSessions;
 using EduCenter.API.Features.LevelOfStudys;
 using EduCenter.API.Features.PaymentPlans;
 using EduCenter.API.Features.Roles;
@@ -17,6 +19,7 @@ public interface IUnitOfWork
     Task SaveChangesAsync(CancellationToken ct);
 
     IUserRepository users { get; }
+    IClassroomRepository classrooms { get; }
     IRoleRepository roles { get; }
     ISubjectRepository subjects { get; }
     ILevelOfStudyRepository levelsOfStudy { get; }
@@ -26,4 +29,5 @@ public interface IUnitOfWork
     IGroupSessionRepository groupSessions { get; }
     IAttendanceRepository attendances { get; }
     IPaymentPlanRepository paymentPlans { get; }
+    IIndividualSessionRepository individualSessions { get; }
 }

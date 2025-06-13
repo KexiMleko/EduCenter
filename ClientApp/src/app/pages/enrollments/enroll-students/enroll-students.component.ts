@@ -17,9 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
-import { GroupDetails } from 'src/app/models/GroupDetails';
 import { GroupService } from 'src/app/services/api/group.service';
-import { StudentBrief } from 'src/app/models/studentBrief';
 import { StudentService } from 'src/app/services/api/student.service';
 import { LevelOfStudy } from 'src/app/models/level-of-study';
 import { LevelsOfStudyService } from 'src/app/services/levels-of-study.service';
@@ -34,6 +32,8 @@ import { StudentEnrollment } from 'src/app/models/student-enrollment';
 import { EnrollmentService } from 'src/app/services/api/enrollment.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { catchError } from 'rxjs';
+import { GroupDetails } from 'src/app/models/group-details';
+import { StudentBrief } from 'src/app/models/student-brief';
 
 @Component({
   selector: 'app-enroll-students',

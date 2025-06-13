@@ -1,4 +1,4 @@
-import { StudentBrief } from "./studentBrief";
+import { StudentBrief } from "./student-brief";
 
 export interface GroupDetails {
   id: number;

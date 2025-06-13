@@ -2,34 +2,34 @@ using EduCenter.API.Data.Enums;
 using EduCenter.API.Data.Models;
 using MediatR;
 
-namespace EduCenter.API.Features.GroupSessions.CreateGroupSession;
-public sealed record CreateGroupSessionCommand(
+namespace EduCenter.API.Features.IndividualSessions.CreateIndividualSession;
+public sealed record CreateIndividualSessionCommand(
     string Title,
     string? Description,
     int TeacherId,
-    int GroupId,
+    int SubjectId,
     DateTime TimeScheduled,
     int ClassroomId,
     SessionStatus Status,
     int SessionDuration
 ) : IRequest<Unit>;
 
-public class CreateGroupSessionHandler : IRequestHandler<CreateGroupSessionCommand, Unit>
+public class CreateIndividualSessionHandler : IRequestHandler<CreateIndividualSessionCommand, Unit>
 {
     IUnitOfWork _uow;
-    public CreateGroupSessionHandler(IUnitOfWork uow)
+    public CreateIndividualSessionHandler(IUnitOfWork uow)
     {
         _uow = uow;
     }
 
-    public async Task<Unit> Handle(CreateGroupSessionCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateIndividualSessionCommand request, CancellationToken cancellationToken)
     {
-        _uow.groupSessions.AddGroupSession(new GroupSession
+        _uow.individualSessions.AddIndividualSession(new IndividualSession
         {
             Title = request.Title,
             Description = request.Description,
             TeacherId = request.TeacherId,
-            GroupId = request.GroupId,
+            SubjectId = request.SubjectId,
             Status = request.Status,
             TimeScheduled = request.TimeScheduled,
             ClassroomId = request.ClassroomId,

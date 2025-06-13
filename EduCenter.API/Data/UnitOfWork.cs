@@ -1,9 +1,11 @@
 
 using EduCenter.API.Data.Repositories;
 using EduCenter.API.Features.Attendances;
+using EduCenter.API.Features.Classrooms;
 using EduCenter.API.Features.Enrollments;
 using EduCenter.API.Features.Groups;
 using EduCenter.API.Features.GroupSessions;
+using EduCenter.API.Features.IndividualSessions;
 using EduCenter.API.Features.LevelOfStudys;
 using EduCenter.API.Features.PaymentPlans;
 using EduCenter.API.Features.Roles;
@@ -29,6 +31,8 @@ public class UnitOfWork : IUnitOfWork
     IGroupSessionRepository _groupSessions;
     IAttendanceRepository _attendances;
     IPaymentPlanRepository _paymentPlans;
+    IClassroomRepository _classrooms;
+    IIndividualSessionRepository _individualSessions;
     // NOTE: Getters
     public IUserRepository users => _users ??= new UserRepository(_appContext);
     public IPaymentPlanRepository paymentPlans => _paymentPlans ??= new PaymentPlanRepository(_appContext);
@@ -40,6 +44,8 @@ public class UnitOfWork : IUnitOfWork
     public ILevelOfStudyRepository levelsOfStudy => _levelsOfStudy ??= new LevelOfStudyRepository(_appContext);
     public IEnrollmentRepository enrollments => _enrollments ??= new EnrollmentRepository(_appContext);
     public IAttendanceRepository attendances => _attendances ??= new AttendanceRepository(_appContext);
+    public IClassroomRepository classrooms => _classrooms ??= new ClassroomRepository(_appContext);
+    public IIndividualSessionRepository individualSessions => _individualSessions ??= new IndividualSessionRepository(_appContext);
 
     // NOTE: Save changes and transaction managment
     public async Task SaveChangesAsync(CancellationToken ct)

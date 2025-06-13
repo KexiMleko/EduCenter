@@ -33,6 +33,9 @@ import { authInterceptor } from './auth/auth.interceptor';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getSerbianPaginatorIntl } from './configs/serbianPaginatorIntl';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { RS_DATE_TIME_FORMATS } from './configs/rs-date-time-format';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 export const appConfig: ApplicationConfig = {
   providers: [{
@@ -48,6 +51,9 @@ export const appConfig: ApplicationConfig = {
     }),
     withComponentInputBinding()
   ),
+  { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  { provide: MAT_DATE_FORMATS, useValue: RS_DATE_TIME_FORMATS },
+  //provideNativeDateAdapter(),
   provideHttpClient(withInterceptors([authInterceptor])),
   provideClientHydration(),
   provideAnimationsAsync(),

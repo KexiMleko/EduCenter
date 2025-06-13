@@ -91,12 +91,12 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Časovi',
     iconName: 'calendar',
-    route: '/sessions',
+    route: '/groupSessions/schedule',
   },
   {
     displayName: 'Individualni časovi',
     iconName: 'user-circle',
-    route: '/sessions/individual',
+    route: '/individualSessions/schedule',
   },
 
   {

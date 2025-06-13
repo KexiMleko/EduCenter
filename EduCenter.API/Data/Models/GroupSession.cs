@@ -12,5 +12,7 @@ public class GroupSession : BaseEntity
     public int TeacherId { get; set; }
     public int ClassroomId { get; set; }
     public int GroupId { get; set; }
+    public DateTime TimeScheduled { get; set; }
+    public int SessionDuration { get; set; }
     public SessionStatus Status { get; set; }
 }

@@ -15,8 +15,7 @@ public class IndividualSession : BaseEntity
     public int ClassroomId { get; set; }
     public int PaymentPlanId { get; set; }
     public DateTime TimeScheduled { get; set; }
+    public int SessionDuration { get; set; }
     public SessionStatus Status { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
-    public StudentPerformance performance { get; set; }
+    public StudentPerformance? performance { get; set; }
 }

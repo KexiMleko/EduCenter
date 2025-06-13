@@ -9,10 +9,10 @@ import {
 import { PaymentPlanFormComponent } from '../payment-plan-form/payment-plan-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { StudentBrief } from 'src/app/models/studentBrief';
 import { MatDividerModule } from '@angular/material/divider';
 import { PaymentPlan } from 'src/app/models/payment-plan';
 import { StudentEnrollment } from 'src/app/models/student-enrollment';
+import { StudentBrief } from 'src/app/models/student-brief';
 
 @Component({
   selector: 'app-define-student-payment-plan-dialog',

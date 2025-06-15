@@ -4,20 +4,6 @@ using Microsoft.EntityFrameworkCore;
 namespace EduCenter.API.Data;
 public class DatabaseContext : DbContext
 {
-    // private bool _disposed = false;
-    // public override async ValueTask DisposeAsync()
-    // {
-    //     Console.WriteLine("DatabaseContext.DisposeAsync called");
-    //     Console.WriteLine(Environment.StackTrace);
-    //     await base.DisposeAsync();
-    // }
-    // public override void Dispose()
-    // {
-    //     Console.WriteLine("DatabaseContext.Dispose called");
-    //     Console.WriteLine(Environment.StackTrace); // Shows who disposed it
-    //
-    //     base.Dispose();
-    // }
     public DatabaseContext(DbContextOptions options) : base(options)
     { }
 
@@ -162,6 +148,7 @@ public class DatabaseContext : DbContext
             entity.HasOne<User>().WithMany().HasForeignKey(s => s.TeacherId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne<Subject>().WithMany().HasForeignKey(s => s.SubjectId).OnDelete(DeleteBehavior.NoAction);
             entity.HasOne<Classroom>().WithMany().HasForeignKey(g => g.ClassroomId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(e => e.PaymentPlan).WithMany().HasForeignKey(e => e.PaymentPlanId).OnDelete(DeleteBehavior.NoAction);
         });
 
     }

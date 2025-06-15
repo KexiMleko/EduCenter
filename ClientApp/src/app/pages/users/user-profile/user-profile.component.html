@@ -1,0 +1,108 @@
+<div class="profile-container">
+  <mat-card class="component-card" *ngIf="!loading && userProfile">
+    <mat-card-header class="mat-mdc-card-header">
+      <mat-card-title class="mat-mdc-card-title">{{ getFullName() }}</mat-card-title>
+      <mat-card-subtitle class="mat-mdc-card-subtitle">{{ userProfile.username }}</mat-card-subtitle>
+
+      <div class="header-actions">
+        <div class="status-badge" [class.active]="userProfile.isActive" [class.inactive]="!userProfile.isActive">
+          {{ userProfile.isActive ? 'Aktivan' : 'Neaktivan' }}
+        </div>
+
+        <button mat-icon-button [matMenuTriggerFor]="actionsMenu" class="actions-button">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #actionsMenu="matMenu">
+          <button mat-menu-item (click)="onEditProfile()">
+            <mat-icon>edit</mat-icon>
+            <span>Uredi profil</span>
+          </button>
+          <button mat-menu-item (click)="onManageRoles()">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Upravljaj ulogama</span>
+          </button>
+          <button mat-menu-item (click)="onChangePassword()">
+            <mat-icon>lock</mat-icon>
+            <span>Promeni lozinku</span>
+          </button>
+          <button mat-menu-item (click)="onToggleStatus()">
+            <mat-icon>{{ userProfile.isActive ? 'block' : 'check_circle' }}</mat-icon>
+            <span>{{ userProfile.isActive ? 'Deaktiviraj' : 'Aktiviraj' }}</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="onDeleteUser()" class="delete-action">
+            <mat-icon>delete</mat-icon>
+            <span>Obriši korisnika</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="profile-grid">
+        <div class="profile-section">
+          <h3>Kontakt informacije</h3>
+          <div class="info-group">
+            <div class="info-item">
+              <label>Email</label>
+              <a [href]="'mailto:' + userProfile.email" class="email-link">
+                {{ userProfile.email }}
+              </a>
+            </div>
+            <div class="info-item">
+              <label>Telefon</label>
+              <a [href]="'tel:' + userProfile.phoneNumber" class="phone-link">
+                {{ userProfile.phoneNumber }}
+              </a>
+            </div>
+            <div class="info-item">
+              <label>Adresa</label>
+              <span class="address-text">{{ userProfile.address }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <h3>Detalji naloga</h3>
+          <div class="info-group">
+            <div class="info-item">
+              <label>Član od</label>
+              <span>{{ userProfile.createdAt | date:'dd.MM.yyyy'}}</span>
+            </div>
+            <div class="info-item">
+              <label>Poslednje ažuriranje</label>
+              <span *ngIf="this.userProfile.updatedAt">{{ userProfile.updatedAt | date:'dd.MM.yyyy' }}</span>
+              <span *ngIf="!this.userProfile.updatedAt">Nema</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section roles-section" *ngIf="userProfile.userRoles && userProfile.userRoles.length > 0">
+        <h3>Uloge</h3>
+        <div class="roles-container">
+          <mat-chip *ngFor="let role of userProfile.userRoles" class="mat-mdc-chip">
+            {{ role.name }}
+          </mat-chip>
+        </div>
+      </div>
+
+      <div class="profile-section note-section" *ngIf="userProfile.note">
+        <h3>Napomene</h3>
+        <div class="note-container">
+          <div class="note-preview">{{ userProfile.note }}</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="loading-container" *ngIf="loading">
+    <div class="loading-spinner"></div>
+    <p>Učitavanje profila...</p>
+  </div>
+
+  <div class="error-container" *ngIf="!loading && !userProfile">
+    <p>Profil nije pronađen</p>
+  </div>
+</div>

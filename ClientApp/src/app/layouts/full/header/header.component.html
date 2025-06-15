@@ -27,17 +27,17 @@
     <img src="/assets/images/profile/user-1.jpg" class="rounded-circle object-cover icon-35 profile-dd" width="35" />
   </button>
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/users/profile', 0]">
       <mat-icon class="d-flex align-items-center"><i data-icon="solar:shield-user-line-duotone"
-          class="iconify icon-22"></i></mat-icon>My Profile
+          class="iconify icon-22"></i></mat-icon>Moj profil
     </button>
-    <button mat-menu-item>
-      <mat-icon class="d-flex align-items-center"><i data-icon="solar:user-id-line-duotone"
-          class="iconify icon-22"></i></mat-icon>My Account
-    </button>
+    <!-- <button mat-menu-item> -->
+    <!--   <mat-icon class="d-flex align-items-center"><i data-icon="solar:user-id-line-duotone" -->
+    <!--       class="iconify icon-22"></i></mat-icon>My Account -->
+    <!-- </button> -->
     <button mat-menu-item>
       <mat-icon class="d-flex align-items-center"><i data-icon="solar:checklist-minimalistic-line-duotone"
-          class="iconify icon-22"></i> </mat-icon>My Task
+          class="iconify icon-22"></i> </mat-icon>Moj raspored
     </button>
 
     <div class="p-x-12 m-t-12">

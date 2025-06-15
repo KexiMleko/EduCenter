@@ -19,4 +19,10 @@ export class UserService implements BaseService {
   getByRole(roleId: number) {
     return this.api.get(`${this.url}/get-by-role/${roleId}`)
   }
+  getCurrentUserDetails() {
+    return this.api.get(`${this.url}/get-current-details`)
+  }
+  getDetailsById(userId: number) {
+    return this.api.get(`${this.url}/get-details-by-id/${userId}`)
+  }
 }

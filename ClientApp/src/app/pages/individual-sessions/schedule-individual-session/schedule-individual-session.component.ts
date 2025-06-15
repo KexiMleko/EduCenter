@@ -56,6 +56,8 @@ export class ScheduleIndividualSessionComponent {
     this.sessionForm = this.fb.group({
       title: ['', Validators.required],
       description: [null, Validators.required],
+      amount: [1000, Validators.required],
+      studentId: [0, Validators.required],
       teacherId: [0, Validators.required],
       timeScheduled: [null, Validators.required],
       subjectId: [0, Validators.required],

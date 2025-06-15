@@ -10,6 +10,7 @@ using EduCenter.API.Features.Users.GetAllUsers;
 using EduCenter.API.Shared.Filters;
 using EduCenter.API.Features.Users.GetUsersPaged;
 using EduCenter.API.Features.Users.GetUsersByRole;
+using EduCenter.API.Features.Users.GetUserDetailsById;
 
 namespace EduCenter.API.Features.Users;
 [Authorize]
@@ -48,7 +49,26 @@ public class UserController : BaseApiController
     {
         var query = new GetUserByIdQuery(id);
         UserViewModel user = await _mediator.Send(query, ct);
-        return user == null ? NotFound() : Ok(user);
+        return user is null ? NotFound() : Ok(user);
+    }
+    [HttpGet("get-details-by-id/{id}")]
+    [ProducesResponseType(typeof(UserDetailsViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCurrentUserDetailsById(int id, CancellationToken ct)
+    {
+        var query = new GetUserDetailsByIdQuery(id);
+        UserDetailsViewModel user = await _mediator.Send(query, ct);
+        return user is null ? NotFound() : Ok(user);
+    }
+    [HttpGet("get-current-details")]
+    [ProducesResponseType(typeof(UserDetailsViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCurrentUserDetailsById(CancellationToken ct)
+    {
+        var userId = GetSenderId();
+        var query = new GetUserDetailsByIdQuery(userId);
+        UserDetailsViewModel user = await _mediator.Send(query, ct);
+        return user is null ? NotFound() : Ok(user);
     }
     [HttpPost("assign-role")]
     public async Task<IActionResult> AssignRole(AssignRoleCommand request, CancellationToken ct)

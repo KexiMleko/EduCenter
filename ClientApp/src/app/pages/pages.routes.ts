@@ -9,6 +9,7 @@ import { GroupListComponent } from './groups/group-list/group-list.component';
 import { EnrollStudentsComponent } from './enrollments/enroll-students/enroll-students.component';
 import { ScheduleGroupSessionComponent } from './group-sessions/schedule-group-session/schedule-group-session.component';
 import { ScheduleIndividualSessionComponent } from './individual-sessions/schedule-individual-session/schedule-individual-session.component';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -23,6 +24,10 @@ export const PagesRoutes: Routes = [
   {
     path: 'users',
     component: UserListComponent
+  },
+  {
+    path: 'users/profile/:userId',
+    component: UserProfileComponent
   },
   {
     path: 'users/add',

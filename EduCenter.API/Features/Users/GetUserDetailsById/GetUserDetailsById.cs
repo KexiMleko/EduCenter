@@ -27,12 +27,14 @@ SELECT
     u.note,
     u.created_at AS CreatedAt,
     u.updated_at AS UpdatedAt,
-    json_agg(json_build_object(
-    'Id', r.id,
-    'Name', r.name,
-    'CreatedAt', r.created_at,
-    'UpdatedAt', r.updated_at
-  ))::text AS UserRolesJson
+    COALESCE(
+        json_agg(json_build_object(
+        'Id', r.id,
+        'Name', r.name,
+        'CreatedAt', r.created_at,
+        'UpdatedAt', r.updated_at
+        ))FILTER(WHERE r.id IS NOT NULL),'[]'
+    )::text AS UserRolesJson
 FROM users u
 LEFT JOIN user_roles ur ON u.id = ur.user_id
 LEFT JOIN roles r ON r.id = ur.role_id
@@ -47,11 +49,6 @@ GROUP BY u.id;
 
         var user = await _appContext.Database.GetDbConnection()
             .QuerySingleOrDefaultAsync<UserDetailsViewModel>(command);
-        Console.WriteLine(user.UserRolesJson);
-        foreach (var role in user.UserRoles)
-        {
-            Console.WriteLine(role.Name);
-        }
         if (user is null) throw new Exception("User not found");
         return user;
     }

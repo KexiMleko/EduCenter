@@ -13,33 +13,44 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatMenuModule, MatIconModule, MatChipsModule, MatDividerModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatChipsModule,
+    MatDividerModule,
+  ],
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss'
+  styleUrl: './user-profile.component.scss',
 })
 export class UserProfileComponent implements OnInit {
   userProfile: UserDetails | null = null;
   userId: number = 0;
   loading = true;
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+  ) { }
   ngOnInit() {
-    const idParam = this.route.snapshot.paramMap.get('groupId');
+    const idParam = this.route.snapshot.paramMap.get('userId');
+    console.log('id param:' + idParam);
     this.userId = idParam ? parseInt(idParam, 10) : 0;
     this.loadUserProfile(this.userId);
-    console.log(this.userProfile?.updatedAt)
   }
 
   private loadUserProfile(userId: number) {
     let user$;
     if (userId == 0) {
-      user$ = this.userService.getCurrentUserDetails()
+      user$ = this.userService.getCurrentUserDetails();
     } else {
-      user$ = this.userService.getDetailsById(userId)
+      user$ = this.userService.getDetailsById(userId);
     }
     user$.subscribe({
-      next: (res: any) => this.userProfile = res,
-      error: (err: any) => console.error(err)
-    })
+      next: (res: any) => (this.userProfile = res),
+      error: (err: any) => console.error(err),
+    });
     this.loading = false;
   }
 

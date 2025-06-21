@@ -13,6 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { BaseTableComponent } from 'src/app/base/base-table-component';
 import { UserService } from 'src/app/services/api/user.service';
 import { User } from 'src/app/models/user';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -27,22 +28,33 @@ import { User } from 'src/app/models/user';
     MatChipsModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    RouterModule,
   ],
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  styleUrl: './user-list.component.scss',
 })
-export class UserListComponent extends BaseTableComponent<User, any> implements OnInit {
-  displayedColumns: string[] = ['fullName', 'username', 'email', 'phoneNumber', 'address', 'note', 'actions'];
+export class UserListComponent
+  extends BaseTableComponent<User, any>
+  implements OnInit {
+  displayedColumns: string[] = [
+    'fullName',
+    'username',
+    'email',
+    'phoneNumber',
+    'address',
+    'note',
+    'actions',
+  ];
   constructor(private userService: UserService) {
     super(userService); // explicitly pass service to base class
   }
   users: User[] = [];
   ngOnInit(): void {
-    this.loadTableData(this.getUserFilter())
+    this.loadTableData(this.getUserFilter());
   }
   getUserFilter() {
-    return {}
+    return {};
   }
   onMenuAction(action: string, user: User): void { }
 }

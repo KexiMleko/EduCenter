@@ -1,4 +1,4 @@
-<div class="profile-container">
+<!-- <div class="profile-container"> -->
   <mat-card class="component-card" *ngIf="!loading && userProfile">
     <mat-card-header class="mat-mdc-card-header">
       <mat-card-title class="mat-mdc-card-title">{{ getFullName() }}</mat-card-title>
@@ -72,8 +72,8 @@
             </div>
             <div class="info-item">
               <label>Poslednje ažuriranje</label>
-              <span *ngIf="this.userProfile.updatedAt">{{ userProfile.updatedAt | date:'dd.MM.yyyy' }}</span>
-              <span *ngIf="!this.userProfile.updatedAt">Nema</span>
+              <span *ngIf="userProfile.updatedAt">{{ userProfile.updatedAt | date:'dd.MM.yyyy' }}</span>
+              <span class="not-found-text" *ngIf="!userProfile.updatedAt">Nema</span>
             </div>
           </div>
         </div>
@@ -105,4 +105,4 @@
   <div class="error-container" *ngIf="!loading && !userProfile">
     <p>Profil nije pronađen</p>
   </div>
-</div>
+<!-- </div> -->

@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -44,21 +52,26 @@ import { GroupSessionService } from 'src/app/services/api/group-session.service'
     NgxMatDatepickerActions,
     //  NgxMatDatepickerClear,
     NgxMatDatepickerCancel,
-    NgxMatDatepickerApply
+    NgxMatDatepickerApply,
   ],
   templateUrl: './schedule-group-session.component.html',
-  styleUrl: './schedule-group-session.component.scss'
+  styleUrl: './schedule-group-session.component.scss',
 })
 export class ScheduleGroupSessionComponent implements OnInit {
-
-  currentDate = new Date()
+  currentDate = new Date();
   @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
   sessionForm: FormGroup;
   teachers: UserBrief[] = [];
-  groups: GroupBrief[] = []
-  classrooms: Classroom[] = []
+  groups: GroupBrief[] = [];
+  classrooms: Classroom[] = [];
   private toast = inject(HotToastService);
-  constructor(private fb: FormBuilder, private groupSessionService: GroupSessionService, private classroomService: ClassroomService, private groupService: GroupService, private userService: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private groupSessionService: GroupSessionService,
+    private classroomService: ClassroomService,
+    private groupService: GroupService,
+    private userService: UserService,
+  ) {
     this.sessionForm = this.fb.group({
       title: ['', Validators.required],
       description: [null, Validators.required],
@@ -66,23 +79,24 @@ export class ScheduleGroupSessionComponent implements OnInit {
       timeScheduled: [null, Validators.required],
       groupId: [0, Validators.required],
       classroomId: [0, Validators.required],
-      sessionDuration: [60, Validators.required]
+      sessionDuration: [60, Validators.required],
     });
   }
   ngOnInit(): void {
     this.loadTeachers();
-    this.loadGroups()
-    this.loadClassrooms()
+    this.loadGroups();
+    this.loadClassrooms();
   }
   loadTeachers() {
     this.userService.getByRole(3).subscribe({
       next: (res: any) => {
         this.teachers = res;
+        console.log(this.teachers);
       },
       error: (err: any) => {
-        console.error(err)
-      }
-    })
+        console.error(err);
+      },
+    });
   }
   loadGroups() {
     this.groupService.getAllBrief().subscribe({
@@ -90,9 +104,9 @@ export class ScheduleGroupSessionComponent implements OnInit {
         this.groups = res;
       },
       error: (err: any) => {
-        console.error(err)
-      }
-    })
+        console.error(err);
+      },
+    });
   }
   loadClassrooms() {
     this.classroomService.getAll().subscribe({
@@ -100,30 +114,30 @@ export class ScheduleGroupSessionComponent implements OnInit {
         this.classrooms = res;
       },
       error: (err: any) => {
-        console.error(err)
-      }
-    })
+        console.error(err);
+      },
+    });
   }
   onSubmit() {
     if (this.sessionForm.valid) {
       const session = this.sessionForm.value;
 
       console.log('Podaci za slanje:', session);
-      this.groupSessionService.scheduleGroupSession(session).pipe(
-        this.toast.observe(
-          {
+      this.groupSessionService
+        .scheduleGroupSession(session)
+        .pipe(
+          this.toast.observe({
             loading: 'Zakazivanje...',
             success: () => 'Nastava je uspesno zakazana',
             error: () => 'Doslo je do greske, pokusajte ponovo',
-          }
-        ),
-      ).subscribe({
-        next: () => {
-          this.formDirective.resetForm();
-        },
-        error: (err: any) => console.error(err)
-      });
+          }),
+        )
+        .subscribe({
+          next: () => {
+            this.formDirective.resetForm();
+          },
+          error: (err: any) => console.error(err),
+        });
     }
   }
-
 }

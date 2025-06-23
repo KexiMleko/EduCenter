@@ -10,6 +10,7 @@ import { EnrollStudentsComponent } from './enrollments/enroll-students/enroll-st
 import { ScheduleGroupSessionComponent } from './group-sessions/schedule-group-session/schedule-group-session.component';
 import { ScheduleIndividualSessionComponent } from './individual-sessions/schedule-individual-session/schedule-individual-session.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { TeacherScheduleComponent } from './schedule/teacher-schedule/teacher-schedule.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -23,47 +24,51 @@ export const PagesRoutes: Routes = [
   },
   {
     path: 'users',
-    component: UserListComponent
+    component: UserListComponent,
   },
   {
     path: 'users/profile/:userId',
-    component: UserProfileComponent
+    component: UserProfileComponent,
   },
   {
     path: 'users/add',
-    component: AddUserComponent
+    component: AddUserComponent,
   },
   {
     path: 'students',
-    component: StudentListComponent
+    component: StudentListComponent,
   },
   {
     path: 'students/add',
-    component: AddStudentComponent
+    component: AddStudentComponent,
   },
 
   {
     path: 'group/add',
-    component: AddGroupComponent
+    component: AddGroupComponent,
   },
   {
     path: 'groups',
-    component: GroupListComponent
+    component: GroupListComponent,
   },
   {
     path: 'groups/:groupId/enrollments',
-    component: EnrollStudentsComponent
+    component: EnrollStudentsComponent,
   },
   {
     path: 'individualSessions/schedule',
-    component: ScheduleIndividualSessionComponent
+    component: ScheduleIndividualSessionComponent,
   },
   {
     path: 'groupSessions/schedule',
-    component: ScheduleGroupSessionComponent
+    component: ScheduleGroupSessionComponent,
+  },
+  {
+    path: 'teacher-schedule',
+    component: TeacherScheduleComponent,
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
-  }
+    redirectTo: 'dashboard',
+  },
 ];

@@ -30,7 +30,8 @@ public class CreateIndividualSessionHandler : IRequestHandler<CreateIndividualSe
         {
             TotalAmount = request.Amount,
             NumberOfPayments = 1,
-            Status = PaymentStatus.Pending
+            Status = PaymentStatus.Pending,
+            CreatedAt = DateTime.UtcNow
         };
         _uow.paymentPlans.AddPaymentPlan(paymentPlan);
         _uow.individualSessions.AddIndividualSession(new IndividualSession

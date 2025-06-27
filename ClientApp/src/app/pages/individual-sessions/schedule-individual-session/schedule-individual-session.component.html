@@ -1,14 +1,22 @@
 <mat-card class="component-card">
   <mat-card-header>
     <mat-card-title>Zakazi novi individualni cas</mat-card-title>
-    <mat-card-subtitle>Zakazi novi cas za studenta individualno</mat-card-subtitle>
+    <mat-card-subtitle
+      >Zakazi novi individualni cas za studenta
+      <strong *ngIf="student"
+        >{{ this.student.firstName }} {{ this.student.lastName }}</strong
+      >
+    </mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-
     <div class="form-container">
-      <form [formGroup]="sessionForm" #form="ngForm" (ngSubmit)="onSubmit()" class="form">
-
+      <form
+        [formGroup]="sessionForm"
+        #form="ngForm"
+        (ngSubmit)="onSubmit()"
+        class="form"
+      >
         <mat-form-field>
           <mat-label>Naslov</mat-label>
           <input matInput formControlName="title" />
@@ -21,7 +29,7 @@
 
         <mat-form-field>
           <mat-label>Cena</mat-label>
-          <input type="number" matInput formControlName="amount"/>
+          <input type="number" matInput formControlName="amount" />
         </mat-form-field>
 
         <mat-form-field>
@@ -44,8 +52,11 @@
         <mat-form-field>
           <mat-label>Ucionica</mat-label>
           <mat-select formControlName="classroomId" required>
-            <mat-option *ngFor="let classroom of classrooms" [value]="classroom.id">
-              {{classroom.name}}
+            <mat-option
+              *ngFor="let classroom of classrooms"
+              [value]="classroom.id"
+            >
+              {{ classroom.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -56,9 +67,18 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Vreme</mat-label>
-          <input matInput (click)="picker.open()" [ngxMatDatetimePicker]="picker" [min]="currentDate"
-            formControlName="timeScheduled" readonly />
-          <ngx-mat-datepicker-toggle matSuffix [for]="picker"></ngx-mat-datepicker-toggle>
+          <input
+            matInput
+            (click)="picker.open()"
+            [ngxMatDatetimePicker]="picker"
+            [min]="currentDate"
+            formControlName="timeScheduled"
+            readonly
+          />
+          <ngx-mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></ngx-mat-datepicker-toggle>
         </mat-form-field>
 
         <ngx-mat-datetime-picker [hideTime]="false" #picker>
@@ -66,19 +86,23 @@
             <div class="flex w-full justify-between">
               <div>
                 <button mat-button ngxMatDatepickerCancel>Ponisti</button>
-                <button mat-raised-button color="primary" ngxMatDatepickerApply>Potvrdi</button>
+                <button mat-raised-button color="primary" ngxMatDatepickerApply>
+                  Potvrdi
+                </button>
               </div>
             </div>
           </ngx-mat-datepicker-actions>
         </ngx-mat-datetime-picker>
 
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="sessionForm.invalid">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="sessionForm.invalid"
+        >
           Zakazi cas
         </button>
       </form>
     </div>
-
   </mat-card-content>
-
 </mat-card>

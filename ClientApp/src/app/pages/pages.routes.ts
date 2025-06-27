@@ -56,7 +56,7 @@ export const PagesRoutes: Routes = [
     component: EnrollStudentsComponent,
   },
   {
-    path: 'individualSessions/schedule',
+    path: 'individualSessions/schedule/:studentId',
     component: ScheduleIndividualSessionComponent,
   },
   {

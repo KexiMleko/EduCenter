@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -15,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { BaseTableComponent } from 'src/app/base/base-table-component';
 import { MaterialModule } from 'src/app/material.module';
@@ -28,6 +34,7 @@ import { LevelsOfStudyService } from 'src/app/services/levels-of-study.service';
   selector: 'app-student-list',
   imports: [
     CommonModule,
+    RouterModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
@@ -44,16 +51,29 @@ import { LevelsOfStudyService } from 'src/app/services/levels-of-study.service';
     MatInputModule,
     ReactiveFormsModule,
     TablerIconsModule,
-    MaterialModule
+    MaterialModule,
   ],
   templateUrl: './student-list.component.html',
-  styleUrl: './student-list.component.scss'
+  styleUrl: './student-list.component.scss',
 })
 export class StudentListComponent extends BaseTableComponent<Student, any> {
-  displayedColumns: string[] = ['fullName', 'levelOfStudy', 'AcademicYear', 'email', 'phoneNumber', 'address', 'note', 'actions'];
+  displayedColumns: string[] = [
+    'fullName',
+    'levelOfStudy',
+    'AcademicYear',
+    'email',
+    'phoneNumber',
+    'address',
+    'note',
+    'actions',
+  ];
   filterForm: FormGroup;
   levels: LevelOfStudy[] = [];
-  constructor(private levelService: LevelsOfStudyService, private studentService: StudentService, private fb: FormBuilder) {
+  constructor(
+    private levelService: LevelsOfStudyService,
+    private studentService: StudentService,
+    private fb: FormBuilder,
+  ) {
     super(studentService);
     this.filterForm = this.fb.group({
       academicYear: [null],
@@ -64,12 +84,12 @@ export class StudentListComponent extends BaseTableComponent<Student, any> {
   }
 
   ngOnInit(): void {
-    this.loadLevels()
-    this.loadTableData(this.createFilters())
+    this.loadLevels();
+    this.loadTableData(this.createFilters());
   }
   async loadLevels() {
     this.levelService.getAll().subscribe({
-      next: (levels: any) => this.levels = levels
+      next: (levels: any) => (this.levels = levels),
     });
   }
   createFilters(): StudentFilter {
@@ -83,6 +103,6 @@ export class StudentListComponent extends BaseTableComponent<Student, any> {
   }
   onMenuAction(action: string, student: Student): void { }
   search() {
-    this.loadTableData(this.createFilters())
+    this.loadTableData(this.createFilters());
   }
 }

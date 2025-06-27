@@ -45,6 +45,12 @@ public class StudentController : BaseApiController
         return Ok(result);
     }
 
+    [HttpGet("get-brief-by-id/{id}")]
+    public async Task<IActionResult> GetStudentsBriefById(int id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetStudentBriefByIdQuery(id), ct);
+        return Ok(result);
+    }
     [HttpGet("get-by-group/{id}")]
     public async Task<IActionResult> GetStudentsByGroup(int id, CancellationToken ct)
     {

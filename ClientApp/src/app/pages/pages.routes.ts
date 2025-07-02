@@ -11,6 +11,7 @@ import { ScheduleGroupSessionComponent } from './group-sessions/schedule-group-s
 import { ScheduleIndividualSessionComponent } from './individual-sessions/schedule-individual-session/schedule-individual-session.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { TeacherScheduleComponent } from './schedule/teacher-schedule/teacher-schedule.component';
+import { AddLevelComponent } from './levels-of-study/add-level/add-level.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -50,6 +51,10 @@ export const PagesRoutes: Routes = [
   {
     path: 'groups',
     component: GroupListComponent,
+  },
+  {
+    path: 'levelsOfStudy/add',
+    component: AddLevelComponent,
   },
   {
     path: 'groups/:groupId/enrollments',

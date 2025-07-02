@@ -1,0 +1,27 @@
+<mat-card class="component-card">
+  <mat-card-header>
+    <mat-card-title>Dodaj novi nivo studije</mat-card-title>
+    <mat-card-subtitle>Dodavanje dovog nivoa studija, npr. srednja skola, osnovna
+      skola...</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="form-container">
+      <form [formGroup]="levelForm" #form="ngForm" (ngSubmit)="onSubmit()" class="form">
+        <mat-form-field>
+          <mat-label>Naziv</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Opis</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="levelForm.invalid">
+          Dodaj nivo studija
+        </button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

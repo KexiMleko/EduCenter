@@ -72,7 +72,6 @@ export const navItems: NavItem[] = [
     subItemIcon: true,
   },
 
-
   {
     divider: true,
     navCap: 'Grupe i časovi',
@@ -111,7 +110,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Nivoi',
     iconName: 'stairs',
-    route: '/levels',
+    route: '/levelsOfStudy/add',
   },
 
   {

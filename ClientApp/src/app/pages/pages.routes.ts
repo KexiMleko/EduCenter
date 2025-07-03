@@ -12,6 +12,7 @@ import { ScheduleIndividualSessionComponent } from './individual-sessions/schedu
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { TeacherScheduleComponent } from './schedule/teacher-schedule/teacher-schedule.component';
 import { AddLevelComponent } from './levels-of-study/add-level/add-level.component';
+import { AddSubjectComponent } from './subjects/add-subject/add-subject.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -51,6 +52,10 @@ export const PagesRoutes: Routes = [
   {
     path: 'groups',
     component: GroupListComponent,
+  },
+  {
+    path: 'subject/add',
+    component: AddSubjectComponent,
   },
   {
     path: 'levelsOfStudy/add',

@@ -13,13 +13,13 @@ public class SubjectController : BaseApiController
     {
         _mediator = mediator;
     }
-    [HttpPost("create-subject")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateSubject(CreateSubjectCommand request, CancellationToken ct)
     {
         await _mediator.Send(request, ct);
         return Ok();
     }
-    [HttpPost("update-subject")]
+    [HttpPost("update")]
     public async Task<IActionResult> UpdateSubject(UpdateSubjectCommand request, CancellationToken ct)
     {
         await _mediator.Send(request, ct);

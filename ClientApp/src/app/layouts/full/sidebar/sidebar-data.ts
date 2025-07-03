@@ -105,7 +105,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Predmeti',
     iconName: 'book',
-    route: '/subjects',
+    route: '/subject/add',
   },
   {
     displayName: 'Nivoi',
